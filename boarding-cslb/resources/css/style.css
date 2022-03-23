@@ -1,0 +1,204 @@
+body{
+    background-color: transparent;
+}
+.webapp-vertical-middle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+#webapp-form-login {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 297px;
+    width: 90%;
+}
+.form-item {
+    margin-bottom: 29px;
+}
+.webapp-logo {
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+#webapp-form-login input[type=email], #webapp-form-login input[type=password] {
+    margin-top: 0px;
+    margin-right: 10px;
+    background-color: #ffffff;
+    border: 1px solid #a2c9c8;
+    border-radius: 2px;
+    width: 100%;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    font-size: 16px;
+    line-height: 1.4em;
+    padding: 5px;
+}
+#webapp-form-login .webapp-button {
+    background: #ffffff;
+    background: -moz-linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+    background: -webkit-linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+    background: -o-linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+    background: -ms-linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+    background: linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+    padding: 9px 0px;
+    box-shadow: none;
+    border: 1px solid #a2c9c8;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-top: 22px;
+    color: #000;
+}
+.navbar-light .navbar-nav .nav-link{
+    color: #fff;
+}
+#navbarSupportedContent{
+    display: block !important;
+    align-items: end;
+}
+#navbarSupportedContent .navbar-nav{
+    display: block;
+    text-align: right;
+}
+.upld{
+    width: 100% !important;
+}
+.img-upload{
+    object-fit: contain;
+}
+.btn-close {
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: 0.25em 0.25em;
+    color: #000;
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+    border: 0;
+    border-radius: 0.25rem;
+    opacity: 0.5;
+}
+.btn-close:hover {
+    color: #000;
+    text-decoration: none;
+    opacity: 0.75;
+}
+.btn-close:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    opacity: 1;
+}
+.btn-close:disabled, .btn-close.disabled {
+    pointer-events: none;
+    -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    opacity: 0.25;
+}
+.user-page h5{
+    margin-bottom: 0;
+}
+.user-page .form-group strong{
+    display: block;
+}
+.user-page .alert p{
+    margin-bottom: 0;
+}
+.user-page .btn,
+#boarding-unterlagen-page .btn{
+    display: inline-block;
+    background-color: red;
+    color: #fff;
+    border: 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+/* Fix navigation page users */
+.navigation .flex .flex-1{
+	display: none;
+}
+.navigation .hidden > div > p{
+	margin: 20px 0;
+}
+.navigation .hidden .z-0{
+	display: block;
+	width: auto;
+    box-shadow: none !important;
+}
+.navigation .hidden .z-0 span,
+.navigation .hidden div:nth-child(2) span.z-0 a,
+.navigation a[rel~="next"]{
+	/* display: inline-block; */
+    display: block;
+    float: left;
+}
+.navigation .hidden .z-0 span span.relative,
+.navigation a[rel~="next"],
+.navigation a[rel~="prev"]{
+	width: 37px;
+}
+.navigation .hidden .z-0 span span.relative.px-4,
+.navigation .hidden div:nth-child(2) span.z-0 a:link{
+	padding-left: 13px !important;
+    padding-right: 13px !important;
+    text-decoration: none;
+    min-height: 37px;
+    width: 37px;
+}
+.navigation .hidden div span.z-0 a{
+    color: #212529;
+}
+.navigation .hidden div:nth-child(2) span.z-0 a[rel~="next"],
+.navigation .hidden div:nth-child(2) span.z-0 a[rel~="prev"]{
+	padding-left: 9px !important;
+    padding-right: 9px !important;
+}
+.navigation .hidden .z-0 span[aria-current="page"] span,
+.navigation .hidden div span.z-0 a:hover{
+    background-color: red !important;
+    color: #fff;
+    border: 1px solid red !important;
+}
+/* End Fix navigation */
+.task-id,
+.task-action{
+    text-align: center;
+    padding: 0 15px;
+}
+.task-id{
+    width: 5%;
+}
+.task-action{
+    width: 11%;
+}
+/* .detail-page strong{
+    display: block;
+}
+.detail-page .task-id{
+    width: 5%;
+}
+.detail-page .task-status{
+    width: 10%;
+}
+.detail-page .task-responsible{
+    width: 25%;
+}
+.detail-page .task-sdate{
+    width: 10%;
+}
+.detail-page .task-edate{
+    width: 10%;
+}
+.detail-page .task-fomular{
+    width: 10%;
+}
+.detail-page .task-send{
+    width: 30%;
+} */

@@ -1,0 +1,289 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+	line-height: 1;
+	font-family: Arial;
+}
+.wrap-login .webapp-logo {
+   margin-bottom: 30px;
+   margin-top: 20px;
+}
+.wrap-login .webapp-vertical-middle {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+	min-height: 100vh;
+}
+.wrap-login #webapp-form-login {
+   margin-left: auto;
+   margin-right: auto;
+   max-width: 297px;
+   width: 90%;
+}
+.form-item {
+	margin-bottom: 29px;
+}
+#webapp-form-login input[type=text], #webapp-form-login input[type=password] {
+   margin-top: 0px;
+   margin-right: 10px;
+   background-color: #ffffff;
+   border: 1px solid #a2c9c8;
+   border-radius: 2px;
+   width: 100%;
+   outline: none;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+   font-size: 16px;
+   line-height: 1.4em;
+   padding: 5px;
+}
+#webapp-form-login .webapp-button {
+   background: #ffffff;
+   background: -moz-linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+   background: -webkit-linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+   background: -o-linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+   background: -ms-linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+   background: linear-gradient(to bottom, #ffffff 47%,#d5d9da 100%);
+   padding: 9px 0px;
+   box-shadow: none;
+   border: 1px solid #a2c9c8;
+   border-radius: 5px;
+   width: 100%;
+   font-size: 12px;
+   line-height: 1.4em;
+   margin-top: 22px;
+}
+#site-header {
+   background-color: red;
+   padding: 20px;
+}
+#checklist-page {
+   padding: 50px 0;
+}
+.top-title {
+   font-weight: 900;
+   text-transform: uppercase;
+   margin-bottom: 50px;
+   font-size: 30px;
+}
+.block-title {
+   margin-bottom: 50px;
+   padding-bottom: 50px;
+   border-bottom: 1px solid red;
+}
+.block-title label {
+   font-weight: 600;
+   white-space: nowrap;
+}
+.group-item {
+   margin-bottom: 30px;
+   align-items: flex-end;
+}
+.group-item .custom-control-label {
+   padding-top: 6px;
+}
+.group-item .form-control,
+.form-floating>.form-select {
+   border-radius: 4px 4px 0 0;
+   background-color: #0000000a;
+   border-width: 0 0 1px;
+   border-style: solid;
+   border-color: #000;
+   outline: none;
+}
+.group-item .form-control:focus,
+.form-floating>.form-select {
+   border-radius: 4px 4px 0 0;
+   background-color: #0000000a;
+   border-width: 0 0 1px;
+   border-style: solid;
+   border-color: #000;
+   outline: none;
+   box-shadow: none;
+}
+.group-item .form-check {
+   display: flex;
+   min-height: 0px;
+   padding-bottom: 5px;
+}
+.group-item .form-check-input {
+   margin-right: 10px;
+   margin-top: 0px;
+   min-width: 15px;
+}
+.group-item .input-group-text {
+   background-color: transparent;
+   border: 0;
+   padding: 0;
+}
+.group-item .form-check-input:focus {
+   border-color: red;
+   box-shadow: 0 0 0 0.25rem rgba(255,0,0,0.25);
+   border-color: red;
+}
+.group-item .form-check-input:checked {
+   background-color: red;
+   border-color: red;
+}
+.custom-control-input:focus~.custom-control-label::before {
+   border-color: red;
+   box-shadow: 0 0 0 0.25rem rgba(255,0,0,0.25);
+   border-color: red;
+}
+.custom-control-input:checked~.custom-control-label::before {
+   background-color: red;
+   border-color: red;
+}
+.form-group.input-group {
+   padding-top: 15px;
+}
+.title-h3 {
+   font-size: 18px;
+   font-weight: bold;
+   text-transform: uppercase;
+}
+.group-item textarea {
+   width: 100%;
+   min-height: 200px;
+}
+.button-red {
+   appearance: none;
+   -webkit-appearance: none;
+   background-color: red;
+   color: #fff;
+   border: 0;
+   padding: 10px 20px;
+   border-radius: 5px;
+   font-size: 14px;
+   font-weight: 700;
+   text-transform: uppercase;
+}
+.nav-tab-board {
+   border-bottom: 1px solid #000;
+   padding: 0px;
+}
+.nav-tab-board .nav-link {
+   cursor: pointer;
+   padding: 25px;
+   background-color: #0000000a;
+   font-weight: bold;
+   color: #000;
+   margin-right: 8px;
+   text-transform: uppercase;
+   transition: 0.3s;
+   display: block;
+   border-radius: 0;
+}
+.nav-tab-board .nav-link:hover, .nav-tab-board .nav-link.active {
+   color: #fff;
+   background-color: red;
+}
+.form-control.datepicker {
+   cursor: pointer;
+}
+.input-group .has-float-label {
+    display: table-cell;
+    width: 100%;
+}
+.input-group .has-float-label .form-control {
+   border-radius: 0px;
+}
+.has-float-label .form-control:placeholder-shown:not(:focus)+* {
+   font-size: 16px;
+   color: #000;
+   opacity: 1;
+}
+.has-float-label label, .has-float-label>span {
+   opacity: 0.68;
+   font-size: 14px;
+}
+.datetimepicker-input {
+   padding-right: 51%;
+   cursor: pointer;
+}
+.datetimepicker-input ~ input[name="abbreviation"] {
+   position: absolute;
+   top: 0px;
+   left: 52%;
+   width: 48%;
+   background-color: transparent!important;
+   border: 0;
+   padding-left: 0px;
+   pointer-events: none;
+   cursor: pointer;
+   opacity: 0;
+   visibility: ;
+}
+.wrap-datetimepicker {
+   position: relative;
+}
+.wrap-datetimepicker:before {
+   content: '/';
+   position: absolute;
+   bottom: 10px;
+   left: 50%;
+   font-size: 18px;
+   opacity: 0;
+   visibility: hidden;
+}
+.show-name input[name="abbreviation"], .show-name.wrap-datetimepicker:before {
+   opacity: 1;
+   visibility: visible;
+}
+.nav-tab-board .group-item {
+   padding: 0px;
+}
+.nav-tab-board .group-item .form-group,
+.nav-tab-board .input-group .has-float-label .form-control {
+   height: 100%;
+}
+.nav-tab-board .group-item, .nav-tab-board .group-item * {
+   margin-bottom: 0;
+}
+.nav-tab-board .input-group .has-float-label .form-control {
+   border: 0;
+}
+.nav-tab-board > .nav, .nav-tab-board > .group-item {
+   padding: 0 15px;
+}
+.list-checklist .item:nth-child(odd) {
+   background-color: #0000000a;
+}
+.checklist-action > a {
+   display: inline-block;
+   background-color: red;
+   color: #fff;
+   border: 0;
+   padding: 10px 20px;
+   border-radius: 5px;
+   font-size: 14px;
+   font-weight: 700;
+   text-transform: uppercase;
+   text-decoration: none;
+}
+#boarding-unterlagen-page .page-link {
+   color: #000;
+   transition: 0.3s;
+   padding: 5px 10px;
+   border-radius: 0px;
+}
+#boarding-unterlagen-page .page-item.disabled .page-link, #boarding-unterlagen-page .page-link:hover {
+   background-color: red;
+   color: #fff;
+}
+@media (max-width: 992px) {
+   .nav-tab-board .nav-link {
+      padding: 20px;
+      font-size: 12px;
+   }
+}
+@media (max-width: 736px) {
+   .nav-tab-board .nav-link {
+      padding: 10px 10px;
+      font-size: 12px;
+      margin: 0 0 15px;
+   }
+}

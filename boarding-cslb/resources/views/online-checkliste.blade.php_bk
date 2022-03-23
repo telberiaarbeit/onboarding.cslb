@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Simple CMS" />
+        <meta name="author" content="Sheikh Heera" />
+
+        <title>boarding-cslb.at</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <title>boarding-cslb.at</title>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href = "{{ asset('/resources/css/fontawesome-all.css') }}" rel="stylesheet" />
+        <link href = "{{ asset('/resources/css/app.css') }}" rel="stylesheet" />
+    </head>
+    <?php $home_link = "https://www.telberia.com/projects/boarding-cslb"; ?>
+    <body class="antialiased">
+        <header id="site-header">
+            <div class="container">
+                <div class="wrap-header">
+                    <div class="logo">
+                        <a href="#"><img src="{{ asset('resources/images/logo.png') }}" alt="logo-header"></a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="site-main wrap-checklist" id="checklist-page">
+            <div class="container">
+                <div class="row block-title">
+                    <div class="col-md-12">
+                        <h2 class="top-title">CHECKLISTE MITARBEITER*)</h2>
+                        <div class="row inner-block-title">
+                            <div class="group-item col-md-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="floatingName" placeholder="Name Mitarbeiter:">
+                                    <label for="floatingName">Name Mitarbeiter:</label>
+                                </div>
+                            </div>
+                            <div class="group-item col-md-6">
+                                <div class="input-group">
+                                    <div class="input-group-text">
+                                        <input class="form-check-input" type="checkbox" value="" aria-label="Eintritt Datum" id="entry-date">
+                                        <label class="form-check-label" for="entry-date">Eintritt Datum:</label>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Eintritt Datum">
+                                </div>
+                            </div>
+                            <div class="group-item col-md-6">
+
+                                <div class="input-group">
+                                    <div class="input-group-text">
+                                        <input class="form-check-input" type="checkbox" value="" aria-label="Austritt Datum" id="exit-date">
+                                        <label class="form-check-label" for="exit-date">Austritt Datum:</label>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Austritt Datum">
+                                </div>
+                            </div>
+                            <div class="group-item col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingPosition" placeholder="Funktion/Position:">
+                                    <label for="floatingPosition">Funktion/Position:</label>
+                                </div>
+                                <p>*Intern/Extern/Contingent Worker</p>
+                            </div>
+                            <div class="group-item col-md-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="floatingSuperior" placeholder="Name Vorgesetzter:">
+                                    <label for="floatingSuperior">Name Vorgesetzter:</label>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row sort-checklist">
+                    <div class="col-md-12">
+                        <div>                            
+                            <div class="form-floating">
+                              <select class="form-select" id="floatingSelect" aria-label="Sortiermöglichkeit nach">
+                                <option selected>Sortiermöglichkeit nach</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                              <label for="floatingSelect">Sortiermöglichkeit nach</label>
+                            </div>        
+                        </div>                
+                    </div>
+                </div> -->
+                <div class="row block-content">
+                    <div class="col-md-12 mb-5">
+                        <div class="row">
+                            <div class="col-md-4 mb-3 d-none d-md-block">
+                                <h3 class="title-h3">DATUM und KÜRZEL erledigt</h3>
+                            </div>
+                            <div class="col-md-8">
+                                <h3 class="title-h3">Vorbereitungen</h3>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Vollständige Jobdescription in Workday hinterlegen (Manager)" id="checkbox1">
+                                    <label class="form-check-label" for="checkbox1">Vollständige Jobdescription in Workday hinterlegen (Manager)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Position in Workday anlegen (Manager)" id="checkbox2">
+                                    <label class="form-check-label" for="checkbox2">Position in Workday anlegen (Manager)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Position in Workday genehmigen lassen (Local/Regional/Global)" id="checkbox3">
+                                    <label class="form-check-label" for="checkbox3">Position in Workday genehmigen lassen (Local/Regional/Global)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Unterlagen (Vertrag, Daten, Bewerbungsunterlagen, Lebenslauf) in Workday hochladen (Manager)" id="checkbox4">
+                                    <label class="form-check-label" for="checkbox4">Unterlagen (Vertrag, Daten, Bewerbungsunterlagen, Lebenslauf) in Workday hochladen (Manager)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Meldung an Krankenkassa (Finance PwC)" id="checkbox5">
+                                    <label class="form-check-label" for="checkbox5">Meldung an Krankenkassa (Finance PwC)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Je nach Position Einrichtung SAP Zugang (Finance)" id="checkbox6">
+                                    <label class="form-check-label" for="checkbox6">Je nach Position Einrichtung SAP Zugang (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Schulungsplan erstellen, ggf. Schulung in Hattersheim organisieren  (Manager)" id="checkbox7">
+                                    <label class="form-check-label" for="checkbox7">Schulungsplan erstellen, ggf. Schulung in Hattersheim organisieren  (Manager)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Urlaubsanspruch prüfen: Tage (GM)" id="checkbox8">
+                                    <label class="form-check-label" for="checkbox8">Urlaubsanspruch prüfen: Tage<span id="holiday-display"></span> (GM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Unterweisung in allen positionsrelevanten Aufgaben und Systeme: Trainingsplan erstellen (direkter Vorgesetzter)" id="checkbox9">
+                                    <label class="form-check-label" for="checkbox9">Unterweisung in allen positionsrelevanten Aufgaben und Systeme: Trainingsplan erstellen (direkter Vorgesetzter)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-5">
+                        <div class="row">
+                            <div class="col-md-4 mb-3 d-none d-md-block">
+                                <h3 class="title-h3">DATUM und KÜRZEL erledigt</h3>
+                            </div>
+                            <div class="col-md-8">
+                                <h3 class="title-h3">Bei Eintritt innerhalb der Probezeit erledigen</h3>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Zutrittskarte erstellen (AssGM)" id="checkbox10">
+                                    <label class="form-check-label" for="checkbox10">Zutrittskarte erstellen (AssGM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Versand Announcement (Manager mit GM)" id="checkbox11">
+                                    <label class="form-check-label" for="checkbox11">Versand Announcement (Manager mit GM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Lichtbildausweis kopieren (AssGM)" id="checkbox12">
+                                    <label class="form-check-label" for="checkbox12">Lichtbildausweis kopieren (AssGM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="e card (Kopie) (Finance für Gehaltsverrechnung PwC)" id="checkbox13">
+                                    <label class="form-check-label" for="checkbox13">e card (Kopie) (Finance für Gehaltsverrechnung PwC)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Bankverbindung (Finance für Gehalt PwC)" id="checkbox14">
+                                    <label class="form-check-label" for="checkbox14">Bankverbindung (Finance für Gehalt PwC)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Schul- und Ausbildungszeugnisse (ausgenommen Pflichtschulen, Firmenzeugnisse aller früheren Arbeitgeber (AssGM)" id="checkbox15">
+                                    <label class="form-check-label" for="checkbox15">Schul- und Ausbildungszeugnisse (ausgenommen Pflichtschulen, Firmenzeugnisse aller früheren Arbeitgeber (AssGM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Strafregisterauszug (ist beim zuständigen Polizeikommissariat u beantragen und muss bis zur Beendigung der Probezeit vorliegen) (AssGM)" id="checkbox16">
+                                    <label class="form-check-label" for="checkbox16">Strafregisterauszug (ist beim zuständigen Polizeikommissariat u beantragen und muss bis zur Beendigung der Probezeit vorliegen) (AssGM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Anforderung entsprechender Zugangsberechtigungn, Systeme und Passwörter (IT)" id="checkbox17">
+                                    <label class="form-check-label" for="checkbox17">Anforderung entsprechender Zugangsberechtigungn, Systeme und Passwörter (IT)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Einweisung in das arbeitsplatzbedingte Umfeld (Vorgesetzter)" id="checkbox18">
+                                    <label class="form-check-label" for="checkbox18">Einweisung in das arbeitsplatzbedingte Umfeld (Vorgesetzter)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Bereitstellung/Anforderung von EDV wie Laptop/Station/Kabeln/Telefon (IT)" id="checkbox19">
+                                    <label class="form-check-label" for="checkbox19">Bereitstellung/Anforderung von EDV wie Laptop/Station/Kabeln/Telefon (IT)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="HRG Account anlegen (AssGM)" id="checkbox20">
+                                    <label class="form-check-label" for="checkbox20">HRG Account anlegen (AssGM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Anmeldung Gruppenkrankenversicherung (Finance)" id="checkbox21">
+                                    <label class="form-check-label" for="checkbox21">Anmeldung Gruppenkrankenversicherung (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Anmeldung Unfallversicherung (Finance)" id="checkbox22">
+                                    <label class="form-check-label" for="checkbox22">Anmeldung Unfallversicherung (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Evtl. je nach Position Übergabe eines Firmenwagens mit entsprechender Policy  (Abgabe einer Führerscheinkopie) (Finance) Unterweisung KFZ Benutzung unterfertigen (Manager)" id="checkbox23">
+                                    <label class="form-check-label" for="checkbox23">Evtl. je nach Position Übergabe eines Firmenwagens mit entsprechender Policy  (Abgabe einer Führerscheinkopie) (Finance) Unterweisung KFZ Benutzung unterfertigen (Manager)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Je nach Position Aktualisierung Authorization Table (Finance)" id="checkbox24">
+                                    <label class="form-check-label" for="checkbox24">Je nach Position Aktualisierung Authorization Table (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Evtl. je nach Position Firmenkreditkarte (Finance)" id="checkbox25">
+                                    <label class="form-check-label" for="checkbox25">Evtl. je nach Position Firmenkreditkarte (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Information über Gleitzeit bzw. Zeiterfassung (AssGM)" id="checkbox26">
+                                    <label class="form-check-label" for="checkbox26">Information über Gleitzeit bzw. Zeiterfassung (AssGM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Übergabe von evtl. Devices wie Mobiltelefon, iPad... inkl. Policy (AssGM)" id="checkbox27">
+                                    <label class="form-check-label" for="checkbox27">Übergabe von evtl. Devices wie Mobiltelefon, iPad... inkl. Policy (AssGM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Information über relevante Betriebsvereinbarungen, siehe dazu auch Sharepoint Dokumente für Onboarding (Direkter Vorgesetzter))" id="checkbox28">
+                                    <label class="form-check-label" for="checkbox28">Information über relevante Betriebsvereinbarungen, siehe dazu auch Sharepoint Dokumente für Onboarding (Direkter Vorgesetzter))</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Aufsetzen von Zielen (Direkter Vorgesetzter)" id="checkbox29">
+                                    <label class="form-check-label" for="checkbox29">Aufsetzen von Zielen (Direkter Vorgesetzter)</label>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Ggf: Dokumentenlager Berechtigung bei Reisswolf beantragen und Einschulung ins Webportal (Vorgesetzter)" id="checkbox-30">
+                                    <label class="form-check-labelform-check-label" for="checkbox-30">Ggf: Dokumentenlager Berechtigung bei Reisswolf beantragen und Einschulung ins Webportal (Vorgesetzter)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Einweisung in das Thema Sicherheit und Gesundheit am Arbeitsplatz (Sicherheitsvertrauensperson) und Brandschutz (Brandschutzbeauftragte)" id="checkbox-31">
+                                    <label class="form-check-labelform-check-label" for="checkbox-31">Einweisung in das Thema Sicherheit und Gesundheit am Arbeitsplatz (Sicherheitsvertrauensperson) und Brandschutz (Brandschutzbeauftragte)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Visitenkarten, ggf Empfehlungskarten …  (Marketing)" id="checkbox-33">
+                                    <label class="form-check-labelform-check-label" for="checkbox-33">Visitenkarten, ggf Empfehlungskarten …  (Marketing)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Signatur Outlook  (Marketing)" id="checkbox-34">
+                                    <label class="form-check-labelform-check-label" for="checkbox-34">Signatur Outlook  (Marketing)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="PV-Abwesenheitsnotiz (Quality)" id="checkbox-35">
+                                    <label class="form-check-labelform-check-label" for="checkbox-35">PV-Abwesenheitsnotiz (Quality)</label>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Zuweisung der Trainingsinhalte in Plateau (LQO)" id="checkbox-36">
+                                    <label class="form-check-labelform-check-label" for="checkbox-36">Zuweisung der Trainingsinhalte in Plateau (LQO)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Unterweisung zur Pharmakovigilanz/Medizinproduktevigilanz (Quality/LSO))" id="checkbox-37">
+                                    <label class="form-check-labelform-check-label" for="checkbox-37">Unterweisung zur Pharmakovigilanz/Medizinproduktevigilanz (Quality/LSO))</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Unterschriftenliste aktualisieren (Quality/LSO)" id="checkbox-38">
+                                    <label class="form-check-labelform-check-label" for="checkbox-38">Unterschriftenliste aktualisieren (Quality/LSO)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Unterweisung in Datenschutz und Umgang mit Verträgen, Formulare (Anti-Korruption) (Compliance)" id="checkbox-39">
+                                    <label class="form-check-labelform-check-label" for="checkbox-39">Unterweisung in Datenschutz und Umgang mit Verträgen, Formulare (Anti-Korruption) (Compliance)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Unterweisung im Verhaltenskodex Pharmig und CSL Behring Verhaltenskodex inkl. Policys (Compliance)" id="checkbox-39">
+                                    <label class="form-check-labelform-check-label" for="checkbox-39">Unterweisung im Verhaltenskodex Pharmig und CSL Behring Verhaltenskodex inkl. Policys (Compliance)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Einweisung in allgemeine Themen: Verpflegung, Umgebung, Parken, Info Kurzparkzone (AssGM)" id="checkbox-40">
+                                    <label class="form-check-labelform-check-label" for="checkbox-40">Einweisung in allgemeine Themen: Verpflegung, Umgebung, Parken, Info Kurzparkzone (AssGM)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Einführung ins Intranet (iNet, askHR, ESS) (IT)" id="checkbox-41">
+                                    <label class="form-check-labelform-check-label" for="checkbox-41">Einführung ins Intranet (iNet, askHR, ESS) (IT)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Schulung Concur und Reisekostenordnung (Selbst am Sharepoint Austria: Links : Schulungen)" id="checkbox-42">
+                                    <label class="form-check-labelform-check-label" for="checkbox-42">Schulung Concur und Reisekostenordnung (Selbst am Sharepoint Austria: Links : Schulungen)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Anlage Bankverbindung in Concur (Selbst in Concur)" id="checkbox-43">
+                                    <label class="form-check-labelform-check-label" for="checkbox-43">Anlage Bankverbindung in Concur (Selbst in Concur)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Einschulung ins FIORI (Manager)" id="checkbox-44">
+                                    <label class="form-check-labelform-check-label" for="checkbox-44">Einschulung ins FIORI (Manager)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Einschulung ARIBA, Dolphin (Finance)" id="checkbox-45">
+                                    <label class="form-check-labelform-check-label" for="checkbox-45">Einschulung ARIBA, Dolphin (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Rundmails: Zugang zu Gruppenverteilern (Manager)" id="checkbox-46">
+                                    <label class="form-check-labelform-check-label" for="checkbox-46">Rundmails: Zugang zu Gruppenverteilern (Manager)</label>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Zugang Apps (Marketing)" id="checkbox-47">
+                                    <label class="form-check-labelform-check-label" for="checkbox-47">Zugang Apps (Marketing)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-5">
+                        <div class="row">
+                            <div class="col-md-4 mb-3 d-none d-md-block">
+                            </div>
+                            <div class="col-md-8">
+                                <h3 class="title-h3">Nach Probezeit</h3>
+                            </div>
+                        </div>                        
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Überwachung Probezeit, Unterschriftenberechtigung im Anschluss, Vertrag (Direkter Vorgesetzter)" id="checkbox-48">
+                                    <label class="form-check-labelform-check-label" for="checkbox-48">Überwachung Probezeit, Unterschriftenberechtigung im Anschluss, Vertrag (Direkter Vorgesetzter)</label>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="row group-item">                                                        
+                            <div class="col-md-12">                                    
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-5">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <h3 class="title-h3">VERMERKE</h3>
+                            </div>
+                            <div class="col-md-4 mb-3 file-group">
+                                <label for="inputGroupFile01" class="mb-3"><strong>Unterschrift Mitarbeite</strong></label>
+                                <div class="input-group mb-3">
+                                    <input type="file" class="form-control" id="inputGroupFile01">
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 file-group">
+                                <label for="inputGroupFile02" class="mb-3"><strong>Unterschrift Manager</strong></label>
+                                <div class="input-group mb-3">
+                                    <input type="file" class="form-control" id="inputGroupFile02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="title-h3">AUSTRITT</h3>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Rückgabe Firmenwagen,  Zutritt Parken, Schlüssel, Tankkarte + Info Reifenlagerung (Finance)" id="checkbox-49">
+                                    <label class="form-check-labelform-check-label" for="checkbox-49">Rückgabe Firmenwagen,  Zutritt Parken, Schlüssel, Tankkarte + Info Reifenlagerung (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Rückgabe Kreditkarte, Rückzahlung RK-Vorschuss (Finance)" id="checkbox-50">
+                                    <label class="form-check-labelform-check-label" for="checkbox-50">Rückgabe Kreditkarte, Rückzahlung RK-Vorschuss (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Rückgabe Zutrittskarte und ggf. Zutrittsschlüssel (Ass Gm)" id="checkbox-51">
+                                    <label class="form-check-labelform-check-label" for="checkbox-51">Rückgabe Zutrittskarte und ggf. Zutrittsschlüssel (Ass Gm)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Meldungen hinsichtlich Krankenkasse (Finance PwC)" id="checkbox-51">
+                                    <label class="form-check-labelform-check-label" for="checkbox-51">Meldungen hinsichtlich Krankenkasse (Finance PwC)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Übernahme oder Abmeldung Gruppenkrankenkassa (Finance)" id="checkbox-52">
+                                    <label class="form-check-labelform-check-label" for="checkbox-52">Übernahme oder Abmeldung Gruppenkrankenkassa (Finance)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Abmeldung Unfallversicherung (Finance)" id="checkbox-53">
+                                    <label class="form-check-labelform-check-label" for="checkbox-53">Abmeldung Unfallversicherung (Finance)</label>
+                                </div>
+                            </div>
+                        </div>                                
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Ggf Dokumentlager Reisswolf: Account löschen (GM)" id="checkbox-54">
+                                    <label class="form-check-labelform-check-label" for="checkbox-54">Ggf Dokumentlager Reisswolf: Account löschen (GM)</label>
+                                </div>
+                            </div>
+                        </div>                                
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Rückgabe Firmenbesitz (Laptop, iPad, iPhone (AssGM) Roll-ups, Werbematerial (Marketing)" id="checkbox-55">
+                                    <label class="form-check-labelform-check-label" for="checkbox-55">Rückgabe Firmenbesitz (Laptop, iPad, iPhone (AssGM) Roll-ups, Werbematerial (Marketing)</label>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="IAMS: Löschen K-Zugriff (Finance) " id="checkbox-56">
+                                    <label class="form-check-labelform-check-label" for="checkbox-56">IAMS: Löschen K-Zugriff (Finance) </label>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Schlüssel (Rollcontainer, Aktenschrank etc) (Manager)" id="checkbox-57">
+                                    <label class="form-check-labelform-check-label" for="checkbox-57">Schlüssel (Rollcontainer, Aktenschrank etc) (Manager)</label>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Systemzutritte löschen (SAP, ggf Bürgerkarte, ggf Firmenbuch) (IT/GM)" id="checkbox-58">
+                                    <label class="form-check-labelform-check-label" for="checkbox-58">Systemzutritte löschen (SAP, ggf Bürgerkarte, ggf Firmenbuch) (IT/GM)</label>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class="row group-item">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="" readonly class="form-control">
+                            </div>
+                            <div class="col-md-8 mb-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" value="Abschließen des Austritts in Workday (Manager)" id="checkbox-59">
+                                    <label class="form-check-labelform-check-label" for="checkbox-59">Abschließen des Austritts in Workday (Manager)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-5">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h3 class="title-h3">VERMERKE</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3 group-item mb-0">                           
+                                <textarea class="form-control" style="min-height:100%"></textarea>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="file-group">
+                                    <label for="inputGroupFile01" class="mb-3"><strong>Unterschrift Mitarbeite</strong></label>
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="inputGroupFile01">
+                                    </div>
+                                </div>
+                                <div class="file-group">
+                                    <label for="inputGroupFile02" class="mb-3"><strong>Unterschrift Manager</strong></label>
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="inputGroupFile02">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-checklist text-end">
+                    <div class="col-md-12">
+                        <button id="Save" class="button-red">Save</button>
+                        <button id="export-pdf" class="button-red">PDF Export <i class="fas fa-file-export"></i></button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    @include('footer')

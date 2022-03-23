@@ -1,0 +1,396 @@
+<?php use Illuminate\Support\Facades\Auth; ?>
+@guest   
+    <?php header("Location: https://www.telberia.com/projects/boarding-cslb");
+    exit(); ?> 
+@else
+    @extends('layouts.public')
+    @section('content')
+        <?php $home_link = "https://www.telberia.com/projects/boarding-cslb";
+        $data = \App\Custom\DataDemo::getPoints();
+        $position = \App\Custom\DataDemo::getPosition();
+        $url_full = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $main_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]".parse_url($url_full, PHP_URL_PATH); 
+        if(isset($_GET['id'])) {
+            $id = $_GET['id']; 
+            $current_id = Auth::id();
+            foreach ($data as $data_item) { 
+                if($id == $data_item['id']) { ?>
+                    <div class="site-main wrap-checklist" id="checklist-page">
+                        <div class="container">
+                            <div class="row block-title">
+                                <div class="col-md-12">
+                                    <div class="row inner-block-title">
+                                        <div class="group-item col-md-12">
+                                            <div class="form-group input-group">
+                                                <span class="has-float-label">
+                                                   <?php if($data_item['id']=="") {
+                                                        echo '<input type="text" class="form-control" id="floatingName" placeholder=" " value="" >';
+                                                    } else {
+                                                        echo '<input type="text" class="form-control" id="floatingName" placeholder=" " value="'.$data_item['full_name'].'">';
+                                                    } ?>
+                                                  <label for="floatingName">Name Mitarbeiter:</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="group-item col-md-6">
+                                            <div class="input-group align-items-end">
+                                               <?php if($data_item['start_day']=="") { ?>
+                                                    <div class="custom-control custom-checkbox mr-sm-2 form-check">
+                                                        <input type="checkbox" class="custom-control-input" value="" aria-label="Eintritt Datum" id="entry-date">
+                                                        <label class="custom-control-label" for="entry-date">Eintritt Datum:</label>
+                                                    </div>
+                                                    <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker-entry" data-toggle="datetimepicker" data-target="#datetimepicker-entry" aria-label="Eintritt Datum">
+                                                <?php } else { ?>
+                                                    <div class="custom-control custom-checkbox mr-sm-2 form-check">
+                                                        <input type="checkbox" class="custom-control-input" value="" aria-label="Eintritt Datum" id="entry-date" checked>
+                                                        <label class="custom-control-label" for="entry-date">Eintritt Datum:</label>
+                                                    </div>
+                                                    <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker-entry" data-toggle="datetimepicker" data-target="#datetimepicker-entry" aria-label="Eintritt Datum" value="<?php echo $data_item['start_day']; ?>">
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <div class="group-item col-md-6 mb-3">
+                                            <div class="input-group align-items-end">
+                                               <?php if($data_item['end_day']=="") {?>
+                                                    <div class="custom-control custom-checkbox mr-sm-2 form-check">
+                                                        <input type="checkbox" class="custom-control-input" value="" aria-label="Austritt Datum" id="exit-date">
+                                                        <label class="custom-control-label" for="exit-date">Austritt Datum:</label>
+                                                    </div>
+                                                    <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker-exit" data-toggle="datetimepicker" data-target="#datetimepicker-exit" aria-label="Austritt Datum">
+                                                <?php } else { ?>
+                                                    <div class="custom-control custom-checkbox mr-sm-2 form-check">
+                                                        <input type="checkbox" class="custom-control-input" value="" aria-label="Austritt Datum" id="exit-date" checked>
+                                                        <label class="custom-control-label" for="exit-date">Austritt Datum:</label>
+                                                    </div>
+                                                    <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker-exit" data-toggle="datetimepicker" data-target="#datetimepicker-exit" aria-label="Austritt Datum" value="<?php echo $data_item['end_day']; ?>">
+                                                <?php } ?>                                                
+                                            </div>
+                                        </div>
+                                        <div class="group-item col-md-12">
+                                            <div class="form-group input-group">
+                                                <span class="has-float-label">
+                                                    <select class="form-select form-control" id="floatingSelect" aria-label="Funktion/Position:">
+                                                        <?php 
+                                                        if($data_item['position']=="") {
+                                                            $current_position = -1;
+                                                        } else {
+                                                            $current_position = $data_item['position'];
+                                                        }
+                                                        $index=0;
+                                                        foreach($position as $position) {
+                                                            if ($current_position == -1) {
+                                                                if($index==0) {
+                                                                    echo '<option value="'.$position.'" selected>'.$position.'</option>';
+                                                                } else {
+                                                                    echo '<option value="'.$position.'">'.$position.'</option>';
+                                                                }
+                                                                $index++;                                                                
+                                                            } else {
+                                                                if($position == $current_position) {
+                                                                    echo '<option value="'.$position.'" selected>'.$position.'</option>';
+                                                                } else {
+                                                                    echo '<option value="'.$position.'">'.$position.'</option>';
+                                                                }
+                                                            }
+                                                        } ?>
+                                                    </select>
+                                                    <label for="floatingSelect">Funktion/Position:</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="group-item col-md-12">
+                                            <div class="form-group input-group">
+                                                <span class="has-float-label">
+                                                   <?php if($data_item['manager']=="") {
+                                                        echo ' <input type="text" class="form-control" id="floatingSuperior" placeholder=" ">';
+                                                    } else {
+                                                        echo ' <input type="text" class="form-control" id="floatingSuperior" placeholder="" value="'.$data_item['manager'].'">';
+                                                    } ?>
+                                                 
+                                                  <label for="floatingName">Name Vorgesetzter:</label>
+                                                </span>
+                                            </div>
+                                        </div>                            
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row block-content">
+                                <div class="col-md-12">                        
+                                    <div class="nav-tab-board row mb-5">
+                                        <ul class="nav nav-pills col-md-12" id="pills-tab" role="tablist">
+                                        <?php $i = 0;
+                                        foreach ($data_item['status'] as $tab_nav) { 
+                                            echo '<li class="nav-item" role="presentation">';
+                                            if($i==0) { 
+                                                echo '<a class="nav-link active" id="'.$tab_nav['status_key'].'-tab" data-toggle="pill" href="#'.$tab_nav['status_key'].'" role="tab" aria-controls="'.$tab_nav['status_key'].'" aria-selected="true">'.$tab_nav['status_key_label'].'</a>';
+                                            } else {
+                                                echo '<a class="nav-link" id="'.$tab_nav['status_key'].'-tab" data-toggle="pill" href="#'.$tab_nav['status_key'].'" role="tab" aria-controls="'.$tab_nav['status_key'].'" aria-selected="false">'.$tab_nav['status_key_label'].'</a>';
+                                            } 
+                                            echo '</li>';
+                                            $i++;
+                                        } ?>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content" id="pills-tabContent">
+                                    <?php $abbreviations = $data_item['abbreviations'];
+                                    $tab_i = 0;
+                                    foreach ($data_item['status'] as $tab_item) { 
+                                        if($tab_i == 0) {
+                                            echo '<div class="tab-pane fade show active" id="'.$tab_item['status_key'].'" role="tabpanel" aria-labelledby="'.$tab_item['status_key'].'-tab">';
+                                        } else {
+                                            echo '<div class="tab-pane fade" id="'.$tab_item['status_key'].'" role="tabpanel" aria-labelledby="'.$tab_item['status_key'].'-tab">';
+                                        } ?>
+                                            <h2 class="top-title"><?php echo $tab_item['status_key_label']; ?></h2>
+                                            <?php foreach($tab_item['group_job'] as $group_job) { ?>
+                                                <div class="mb-5">
+                                                    <div class="row">
+                                                        <div class="col-md-4 mb-3 d-none d-md-block">
+                                                            <?php if ($group_job['group_has_label'] == 'yes') {
+                                                                echo '<h3 class="title-h3">DATUM und KÜRZEL erledigt</h3>';
+                                                            } ?>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <h3 class="title-h3"><?php echo $group_job['group_job_name']; ?></h3>
+                                                        </div>
+                                                    </div>
+                                                    <?php foreach($group_job['group_item'] as $group_item) {
+                                                        if ($group_item['job_type'] == "textarea") { ?>
+                                                            <div class="row group-item">                                                        
+                                                                <div class="col-md-12">                                    
+                                                                    <textarea class="form-control" value="<?php echo $group_item['job_value']; ?>"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div class="row group-item">                                                                    
+                                                                <?php if (empty($group_item['job_value'])) {
+                                                                    echo '<div class="col-md-4 mb-3 wrap-datetimepicker">';
+                                                                        echo '<input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker_'.$group_item['job_id'].'" data-toggle="datetimepicker" data-target="#datetimepicker_'.$group_item['job_id'].'">';     
+                                                                        echo '<input type="text" name="abbreviation" value="'.$abbreviations.'" class="form-control">'; 
+                                                                    echo "</div>";
+                                                                } else {
+                                                                    echo '<div class="col-md-4 mb-3 wrap-datetimepicker show-name">';
+                                                                        echo '<input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker_'.$group_item['job_id'].'" data-toggle="datetimepicker" data-target="#datetimepicker_'.$group_item['job_id'].'" value="'.$group_item['job_date'].'">';
+                                                                        echo '<input type="text" name="abbreviation" value="'.$abbreviations.'" class="form-control">';
+                                                                    echo "</div>";
+                                                                } ?>
+                                                                <div class="col-md-8 mb-3 d-flex align-items-end">
+                                                                    <div class="input-group">
+                                                                        <div class="custom-control custom-checkbox form-check">
+                                                                            <?php if($group_item['job_value'] =="yes") {
+                                                                                echo'<input class="custom-control-input" type="checkbox" value="yes" id="check_'.$group_item['job_id'].'" checked class="input-group-append" data-target="#ddatetimepicker_'.$group_item['job_id'].'" data-toggle="datetimepicker">';
+                                                                            } else {
+                                                                                echo'<input class="custom-control-input" type="checkbox" value="" id="check_'.$group_item['job_id'].'" class="input-group-append" data-target="#datetimepicker_'.$group_item['job_id'].'" data-toggle="datetimepicker">';
+                                                                            }
+                                                                                echo '<label class="custom-control-label" for="check_'.$group_item['job_id'].'">'.$group_item['job_description'].'</label>';
+                                                                            ?>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php }
+                                                    } ?>
+                                                </div>
+                                            <?php } ?>
+                                            <div class="mb-5">
+                                                <div class="row">
+                                                    <div class="col-md-4 mb-3">
+                                                        <h3 class="title-h3">VERMERKE</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <?php if(empty($tab_item->has_comment)) { ?>
+                                                        <div class="col-md-4 mb-3"></div>
+                                                        <div class="col-md-4 mb-3 file-group">
+                                                            <div class="e-signature">
+                                                                <div class="group mb-3">
+                                                                    <canvas onmouseenter="draw_sign(this.id)" 
+                                                                        id="canvas-<?php echo $tab_item['status_key']; ?>" 
+                                                                        class="canvas-signature" 
+                                                                        width="320px" height="200px">
+                                                                            
+                                                                    </canvas>
+                                                                </div>
+                                                                <div class="group mb-3">
+                                                                    <button class="button-red" 
+                                                                    onclick="submit_canvas(this)" 
+                                                                    data-canvas="canvas-<?php echo $tab_item['status_key']; ?>" 
+                                                                    data-sigimage="sigimage1-<?php echo $tab_item['status_key']; ?>" 
+                                                                    data-sigdataurl="sig-dataUrl1-<?php echo $tab_item['status_key']; ?>" 
+                                                                    data-canvas="canvas-<?php echo $tab_item['status_key']; ?>">
+                                                                        Einreichen
+                                                                    </button>
+                                                                    <button class="button-red" 
+                                                                    id="sig-clearBtn-1" 
+                                                                    onclick="clear_canvas(this)" 
+                                                                    data-canvas="canvas-<?php echo $tab_item['status_key']; ?>" 
+                                                                    data-sigimage="sigimage1-<?php echo $tab_item['status_key']; ?>" 
+                                                                    data-sigdataurl="sig-dataUrl1-<?php echo $tab_item['status_key']; ?>" >
+                                                                        Löschen
+                                                                    </button>
+                                                                </div>
+                                                                <input type="hidden" name="" id="sig-dataUrl1-<?php echo $tab_item['status_key']; ?>" class="form-control" rows="5">
+                                                                <img id="sigimage1-<?php echo $tab_item['status_key']; ?>" src="" style=" display: none;" width="320px" height="200px">
+                                                            </div>                                                         
+                                                            <label class="my-4">
+                                                                <strong><?php echo $tab_item['employee_signature_label']; ?></strong>
+                                                            </label>
+                                                           <!--  <div class="input-group mb-3">
+                                                                <?php /*if(!empty($tab_item->employee_signature_value)){
+                                                                    echo '<input type="file" class="form-control upload" accept="image/*" id="input01_'.$tab_item['status_key'].'" value="$tab_item->employee_signature_value">';
+                                                                    echo '<img src="'.$tab_item->employee_signature_value.'" class="image-upload">';
+
+                                                                } else {
+                                                                    echo '<input type="file" class="form-control upload" accept="image/*" id="input01_'.$tab_item['status_key'].'">';
+                                                                } */?>
+                                                            </div>  -->   
+                                                        </div>
+                                                        <div class="col-md-4 mb-3 file-group">
+                                                            <div class="e-signature">
+                                                                <div class="group mb-3">
+                                                                    <canvas onmouseenter="draw_sign(this.id)" 
+                                                                    id="sigcanvas-2-<?php echo $tab_item['status_key']; ?>" 
+                                                                    class="canvas-signature" 
+                                                                    width="320px" height="200px"></canvas>
+                                                                </div>
+                                                                <div class="group mb-3">
+                                                                    <button class="button-red" 
+                                                                    onclick="submit_canvas(this)" 
+                                                                    data-canvas="sigcanvas-2-<?php echo $tab_item['status_key']; ?>" 
+                                                                    data-sigimage="sigimage-2-<?php echo $tab_item['status_key']; ?>" 
+                                                                    data-sigdataurl="sigdataUrl-2-<?php echo $tab_item['status_key']; ?>">
+                                                                        Einreichen
+                                                                    </button>
+                                                                    <button class="button-red" 
+                                                                    onclick="clear_canvas(this)" 
+                                                                    data-canvas="sig-canvas-2" 
+                                                                    data-sigimage="sigimage-2-<?php echo $tab_item['status_key']; ?>" 
+                                                                    data-sigdataurl="sigdataUrl-2-<?php echo $tab_item['status_key']; ?>">
+                                                                        Löschen
+                                                                    </button>
+                                                                </div>
+
+                                                                <input type="hidden" name="" id="sigdataUrl-2-<?php echo $tab_item['status_key']; ?>" class="form-control" rows="5">
+                                                                <img id="sigimage-2-<?php echo $tab_item['status_key']; ?>" src="" style=" display: none;">
+                                                            </div>
+                                                            <label class="my-4">
+                                                                <strong><?php echo $tab_item['signature_manager_label']; ?></strong>
+                                                            </label>
+                                                            <!-- <div class="input-group mb-3">
+                                                             <?php /*if(!empty($tab_item->signature_manager_value)){
+                                                                echo '<input type="file" class="form-control upload" accept="image/*" id="input02_'.$tab_item['status_key'].'" value="$tab_item->signature_manager_value">';
+                                                                echo '<img src="'.$tab_item->signature_manager_value.'" class="image-upload">';
+
+                                                            } else {
+                                                                echo '<input type="file" class="form-control upload" accept="image/*" id="input02_'.$tab_item['status_key'].'">';
+                                                            }*/ ?>
+                                                            </div> -->
+                                                        </div>
+                                                    <?php } else { ?>
+                                                        <div class="col-md-4 mb-3 group-item mb-0">                           
+                                                            <textarea class="form-control" style="min-height:100%" value="<?php echo $tab_item->comment_value; ?>"></textarea>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="file-group">
+                                                                <div class="e-signature">
+                                                                    <div class="group mb-3">
+                                                                        <canvas onmouseenter="draw_sign(this.id)" 
+                                                                        id="canvas-<?php echo $tab_item['status_key']; ?>" 
+                                                                        class="canvas-signature" 
+                                                                        width="320px" height="200px"></canvas>
+                                                                    </div>
+                                                                    <div class="group mb-3">
+                                                                        <button class="button-red" 
+                                                                        onclick="submit_canvas(this)" 
+                                                                        data-canvas="canvas-<?php echo $tab_item['status_key']; ?>" 
+                                                                        data-sigimage="sigimage1-<?php echo $tab_item['status_key']; ?>" 
+                                                                        data-sigdataurl="sig-dataUrl1-<?php echo $tab_item['status_key']; ?>" 
+                                                                        data-canvas="canvas-<?php echo $tab_item['status_key']; ?>">
+                                                                            Einreichen
+                                                                        </button>
+                                                                        <button class="button-red" 
+                                                                        id="sig-clearBtn-1" 
+                                                                        onclick="clear_canvas(this)" 
+                                                                        data-canvas="canvas-<?php echo $tab_item['status_key']; ?>" 
+                                                                        data-sigimage="sigimage1-<?php echo $tab_item['status_key']; ?>" 
+                                                                        data-sigdataurl="sig-dataUrl1-<?php echo $tab_item['status_key']; ?>" >
+                                                                            Löschen
+                                                                        </button>
+                                                                    </div>
+                                                                    <input type="hidden" id="sig-dataUrl1-<?php echo $tab_item['status_key']; ?>" class="form-control" rows="5">
+                                                                    <img id="sigimage1-<?php echo $tab_item['status_key']; ?>" src="" style=" display: none;">
+                                                                </div>
+                                                                <!-- <div class="input-group mb-3">
+                                                                    <?php /* if(!empty($tab_item->employee_signature_value)){
+                                                                        echo '<input type="file" class="form-control upload" accept="image/*" id="input01_'.$tab_item['status_key'].'" value="$tab_item->employee_signature_value">';
+                                                                        echo '<img src="'.$tab_item->employee_signature_value.'" class="image-upload">';
+
+                                                                    } else {
+                                                                        echo '<input type="file" class="form-control upload" accept="image/*" id="input01_'.$tab_item['status_key'].'">';
+                                                                    } */ ?>
+                                                                </div>  -->
+
+                                                                <label class="my-4">
+                                                                    <strong><?php echo $tab_item['employee_signature_label']; ?></strong>
+                                                                </label>
+                                                            </div>
+                                                            <div class="file-group">
+                                                                <!-- <div class="input-group mb-3">
+                                                                 <?php /* if(!empty($tab_item->signature_manager_value)){
+                                                                    echo '<input type="file" class="form-control upload" accept="image/*" id="input02_'.$tab_item['status_key'].'" value="$tab_item->signature_manager_value">';
+                                                                    echo '<img src="'.$tab_item->signature_manager_value.'" class="image-upload">';
+
+                                                                } else {
+                                                                    echo '<input type="file" class="form-control upload" accept="image/*" id="input02_'.$tab_item['status_key'].'">';
+                                                                } */ ?>
+                                                                </div> -->
+                                                                <div class="e-signature">
+                                                                    <div class="group mb-3">
+                                                                        <canvas onmouseenter="draw_sign(this.id)" 
+                                                                        id="sigcanvas-2-<?php echo $tab_item['status_key']; ?>" 
+                                                                        class="canvas-signature" 
+                                                                        width="320px" height="200px"></canvas>
+                                                                    </div>
+                                                                    <div class="group mb-3">
+                                                                        <button class="button-red" 
+                                                                        onclick="submit_canvas(this)" 
+                                                                        data-canvas="sigcanvas-2-<?php echo $tab_item['status_key']; ?>" 
+                                                                        data-sigimage="sigimage-2-<?php echo $tab_item['status_key']; ?>" 
+                                                                        data-sigdataurl="sigdataUrl-2-<?php echo $tab_item['status_key']; ?>">
+                                                                            Einreichen
+                                                                        </button>
+                                                                        <button class="button-red" 
+                                                                        onclick="clear_canvas(this)" 
+                                                                        data-canvas="sig-canvas-2" 
+                                                                        data-sigimage="sigimage-2-<?php echo $tab_item['status_key']; ?>" 
+                                                                        data-sigdataurl="sigdataUrl-2-<?php echo $tab_item['status_key']; ?>">
+                                                                            Löschen
+                                                                        </button>
+                                                                    </div>
+                                                                    <input type="hidden" id="sigdataUrl-2-<?php echo $tab_item['status_key']; ?>" class="form-control" rows="5">
+                                                                    <img id="sigimage-2-<?php echo $tab_item['status_key']; ?>" src="" style=" display: none;">
+                                                                </div>
+                                                                <label class="my-4">
+                                                                    <strong><?php echo $tab_item['signature_manager_label']; ?></strong>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        </div>                                          
+                                    <?php $tab_i++; } ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-checklist text-end">
+                                <button id="Save" class="button-red">Speichern</button>
+                                <button onclick="getPDF()" id="export-pdf" class="button-red">PDF-Export <i class="fas fa-file-export"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                <?php }
+            }
+        } ?>
+        
+    @endsection
+@endguest

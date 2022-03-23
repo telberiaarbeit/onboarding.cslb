@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Simple CMS" />
+        <meta name="author" content="Sheikh Heera" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.1/dist/bootstrap-float-label.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
+        <title>boarding-cslb.at</title>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href = "{{ asset('/resources/css/fontawesome-all.css') }}" rel="stylesheet" />
+        <link href = "{{ asset('/resources/css/app.css') }}" rel="stylesheet" />
+    </head>
+    <?php $home_link = "https://www.telberia.com/projects/boarding-cslb"; ?>
+    <body class="antialiased">
+        <header id="site-header">
+            <div class="container">
+                <div class="wrap-header">
+                    <div class="logo">
+                        <a href="#"><img src="{{ asset('resources/images/logo.png') }}" alt="logo-header"></a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="site-main wrap-checklist" id="checklist-page">
+            <div class="container">
+                <div class="row block-title">
+                    <div class="col-md-12">
+                        <div class="row inner-block-title">
+                            <div class="group-item col-md-12">
+                                <div class="form-group input-group">
+                                    <span class="has-float-label">
+                                      <input type="text" class="form-control" id="floatingName" placeholder=" " value="Elvan Döner">
+                                      <label for="floatingName">Name Mitarbeiter:</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="group-item col-md-6">
+                                <div class="input-group align-items-end">
+                                    <div class="custom-control custom-checkbox mr-sm-2 form-check">
+                                        <input type="checkbox" class="custom-control-input" value="" aria-label="Eintritt Datum" id="entry-date">
+                                        <label class="custom-control-label" for="entry-date">Eintritt Datum:</label>
+                                    </div>
+                                    <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker-entry" data-toggle="datetimepicker" data-target="#datetimepicker-entry" aria-label="Eintritt Datum">
+                                </div>
+                            </div>
+                            <div class="group-item col-md-6 mb-3">
+                                <div class="input-group align-items-end">
+                                    <div class="custom-control custom-checkbox mr-sm-2 form-check">
+                                        <input type="checkbox" class="custom-control-input" value="" aria-label="Austritt Datum" id="exit-date">
+                                        <label class="custom-control-label" for="exit-date">Austritt Datum:</label>
+                                    </div>
+                                    <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker-exit" data-toggle="datetimepicker" data-target="#datetimepicker-exit" aria-label="Austritt Datum">
+                                </div>
+                            </div>
+                            <div class="group-item col-md-12">
+                                <div class="form-group input-group">
+                                    <span class="has-float-label">
+                                        <select class="form-select form-control" id="floatingSelect" aria-label="Funktion/Position:">
+                                            <option value="intern" selected>Intern</option>
+                                            <option value="extern">Extern</option>
+                                            <option value="contingent-worker">Contingent Worker</option>
+                                        </select>
+                                        <label for="floatingSelect">Funktion/Position:</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="group-item col-md-12">
+                                <div class="form-group input-group">
+                                    <span class="has-float-label">
+                                      <input type="text" class="form-control" id="floatingSuperior" placeholder=" " value="Beate Pettinger-Natmeßnig">
+                                      <label for="floatingName">Name Vorgesetzter:</label>
+                                    </span>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row block-content">
+                    <div class="col-md-12">                        
+                        <div class="nav-tab-board row mb-5">
+                            <ul class="nav nav-pills col-md-9" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="onboarding-tab" data-toggle="pill" href="#onboarding" role="tab" aria-controls="onboarding" aria-selected="true">Onboarding</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="offboarding-tab" data-toggle="pill" href="#offboarding" role="tab" aria-controls="offboarding" aria-selected="false">Offboarding</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="maternity-leave-tab" data-toggle="pill" href="#maternity-leave" role="tab" aria-controls="maternity-leave" aria-selected="false">Maternity</a>
+                                </li>
+                            </ul>
+                            <div class="group-item col-md-3">
+                                <div class="form-group input-group">
+                                    <span class="has-float-label">
+                                        <select class="form-select form-control" id="floatingFilter" aria-label="Sortiermöglichkeit nach:">
+                                            <option value="0" selected>Alle</option>
+                                            <option value="intern">Verantwortlicher</option>
+                                            <option value="extern">System</option>
+                                            <option value="contingent-worker">Fälligkeitsperiode/datum</option>
+                                        </select>
+                                        <label for="floatingFilter">Sortiermöglichkeit nach:</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="onboarding" role="tabpanel" aria-labelledby="onboarding-tab">
+                                <h2 class="top-title">Onboarding</h2>
+                                <div class="mb-5">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3 d-none d-md-block">
+                                            <h3 class="title-h3">DATUM und KÜRZEL erledigt</h3>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h3 class="title-h3">Vorbereitungen</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Vollständige Jobdescription in Workday hinterlegen (Manager)" id="checkbox1">
+                                                    <label class="custom-control-label" for="checkbox1">Vollständige Jobdescription in Workday hinterlegen (Manager)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Position in Workday anlegen (Manager)" id="checkbox2">
+                                                    <label class="custom-control-label" for="checkbox2">Position in Workday anlegen (Manager)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker3" data-toggle="datetimepicker" data-target="#datetimepicker3">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Position in Workday genehmigen lassen (Local/Regional/Global)" id="checkbox3">
+                                                    <label class="custom-control-label" for="checkbox3">Position in Workday genehmigen lassen (Local/Regional/Global)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker4" data-toggle="datetimepicker" data-target="#datetimepicker4">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Unterlagen (Vertrag, Daten, Bewerbungsunterlagen, Lebenslauf) in Workday hochladen (Manager)" id="checkbox4">
+                                                    <label class="custom-control-label" for="checkbox4">Unterlagen (Vertrag, Daten, Bewerbungsunterlagen, Lebenslauf) in Workday hochladen (Manager)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Meldung an Krankenkassa (Finance PwC)" id="checkbox5">
+                                                    <label class="custom-control-label" for="checkbox5">Meldung an Krankenkassa (Finance PwC)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker6" data-toggle="datetimepicker" data-target="#datetimepicker6">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Je nach Position Einrichtung SAP Zugang (Finance)" id="checkbox6">
+                                                    <label class="custom-control-label" for="checkbox6">Je nach Position Einrichtung SAP Zugang (Finance)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker7" data-toggle="datetimepicker" data-target="#datetimepicker7">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Schulungsplan erstellen, ggf. Schulung in Hattersheim organisieren  (Manager)" id="checkbox7">
+                                                    <label class="custom-control-label" for="checkbox7">Schulungsplan erstellen, ggf. Schulung in Hattersheim organisieren  (Manager)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker8" data-toggle="datetimepicker" data-target="#datetimepicker8">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Urlaubsanspruch prüfen: Tage (GM)" id="checkbox8">
+                                                    <label class="custom-control-label" for="checkbox8">Urlaubsanspruch prüfen: Tage<span id="holiday-display"></span> (GM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker9" data-toggle="datetimepicker" data-target="#datetimepicker9">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Unterweisung in allen positionsrelevanten Aufgaben und Systeme: Trainingsplan erstellen (direkter Vorgesetzter)" id="checkbox9">
+                                                    <label class="custom-control-label" for="checkbox9">Unterweisung in allen positionsrelevanten Aufgaben und Systeme: Trainingsplan erstellen (direkter Vorgesetzter)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-5">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3 d-none d-md-block">
+                                            <h3 class="title-h3">DATUM und KÜRZEL erledigt</h3>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h3 class="title-h3">Bei Eintritt innerhalb der Probezeit erledigen</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker10" data-toggle="datetimepicker" data-target="#datetimepicker10">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Zutrittskarte erstellen (AssGM)" id="checkbox10">
+                                                    <label class="custom-control-label" for="checkbox10">Zutrittskarte erstellen (AssGM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker11" data-toggle="datetimepicker" data-target="#datetimepicker11">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Versand Announcement (Manager mit GM)" id="checkbox11">
+                                                    <label class="custom-control-label" for="checkbox11">Versand Announcement (Manager mit GM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker12" data-toggle="datetimepicker" data-target="#datetimepicker12">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Lichtbildausweis kopieren (AssGM)" id="checkbox12">
+                                                    <label class="custom-control-label" for="checkbox12">Lichtbildausweis kopieren (AssGM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker13" data-toggle="datetimepicker" data-target="#datetimepicker13">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="e card (Kopie) (Finance für Gehaltsverrechnung PwC)" id="checkbox13">
+                                                    <label class="custom-control-label" for="checkbox13">e card (Kopie) (Finance für Gehaltsverrechnung PwC)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker14" data-toggle="datetimepicker" data-target="#datetimepicker14">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Bankverbindung (Finance für Gehalt PwC)" id="checkbox14">
+                                                    <label class="custom-control-label" for="checkbox14">Bankverbindung (Finance für Gehalt PwC)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker15" data-toggle="datetimepicker" data-target="#datetimepicker15">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Schul- und Ausbildungszeugnisse (ausgenommen Pflichtschulen, Firmenzeugnisse aller früheren Arbeitgeber (AssGM)" id="checkbox15">
+                                                    <label class="custom-control-label" for="checkbox15">Schul- und Ausbildungszeugnisse (ausgenommen Pflichtschulen, Firmenzeugnisse aller früheren Arbeitgeber (AssGM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker16" data-toggle="datetimepicker" data-target="#datetimepicker16">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Strafregisterauszug (ist beim zuständigen Polizeikommissariat u beantragen und muss bis zur Beendigung der Probezeit vorliegen) (AssGM)" id="checkbox16">
+                                                    <label class="custom-control-label" for="checkbox16">Strafregisterauszug (ist beim zuständigen Polizeikommissariat u beantragen und muss bis zur Beendigung der Probezeit vorliegen) (AssGM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker17" data-toggle="datetimepicker" data-target="#datetimepicker17">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Anforderung entsprechender Zugangsberechtigungn, Systeme und Passwörter (IT)" id="checkbox17">
+                                                    <label class="custom-control-label" for="checkbox17">Anforderung entsprechender Zugangsberechtigungn, Systeme und Passwörter (IT)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker18" data-toggle="datetimepicker" data-target="#datetimepicker18">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Einweisung in das arbeitsplatzbedingte Umfeld (Vorgesetzter)" id="checkbox18">
+                                                    <label class="custom-control-label" for="checkbox18">Einweisung in das arbeitsplatzbedingte Umfeld (Vorgesetzter)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker19" data-toggle="datetimepicker" data-target="#datetimepicker19">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Bereitstellung/Anforderung von EDV wie Laptop/Station/Kabeln/Telefon (IT)" id="checkbox19">
+                                                    <label class="custom-control-label" for="checkbox19">Bereitstellung/Anforderung von EDV wie Laptop/Station/Kabeln/Telefon (IT)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker20" data-toggle="datetimepicker" data-target="#datetimepicker20">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="HRG Account anlegen (AssGM)" id="checkbox20">
+                                                    <label class="custom-control-label" for="checkbox20">HRG Account anlegen (AssGM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker21" data-toggle="datetimepicker" data-target="#datetimepicker21">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Anmeldung Gruppenkrankenversicherung (Finance)" id="checkbox21">
+                                                    <label class="custom-control-label" for="checkbox21">Anmeldung Gruppenkrankenversicherung (Finance)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker22" data-toggle="datetimepicker" data-target="#datetimepicker22">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Anmeldung Unfallversicherung (Finance)" id="checkbox22">
+                                                    <label class="custom-control-label" for="checkbox22">Anmeldung Unfallversicherung (Finance)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker23" data-toggle="datetimepicker" data-target="#datetimepicker23">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Evtl. je nach Position Übergabe eines Firmenwagens mit entsprechender Policy  (Abgabe einer Führerscheinkopie) (Finance) Unterweisung KFZ Benutzung unterfertigen (Manager)" id="checkbox23">
+                                                    <label class="custom-control-label" for="checkbox23">Evtl. je nach Position Übergabe eines Firmenwagens mit entsprechender Policy  (Abgabe einer Führerscheinkopie) (Finance) Unterweisung KFZ Benutzung unterfertigen (Manager)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker24" data-toggle="datetimepicker" data-target="#datetimepicker24">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Je nach Position Aktualisierung Authorization Table (Finance)" id="checkbox24">
+                                                    <label class="custom-control-label" for="checkbox24">Je nach Position Aktualisierung Authorization Table (Finance)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker25" data-toggle="datetimepicker" data-target="#datetimepicker25">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Evtl. je nach Position Firmenkreditkarte (Finance)" id="checkbox25">
+                                                    <label class="custom-control-label" for="checkbox25">Evtl. je nach Position Firmenkreditkarte (Finance)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker26" data-toggle="datetimepicker" data-target="#datetimepicker26">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Information über Gleitzeit bzw. Zeiterfassung (AssGM)" id="checkbox26">
+                                                    <label class="custom-control-label" for="checkbox26">Information über Gleitzeit bzw. Zeiterfassung (AssGM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker27" data-toggle="datetimepicker" data-target="#datetimepicker27">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Übergabe von evtl. Devices wie Mobiltelefon, iPad... inkl. Policy (AssGM)" id="checkbox27">
+                                                    <label class="custom-control-label" for="checkbox27">Übergabe von evtl. Devices wie Mobiltelefon, iPad... inkl. Policy (AssGM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker28" data-toggle="datetimepicker" data-target="#datetimepicker28">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Information über relevante Betriebsvereinbarungen, siehe dazu auch Sharepoint Dokumente für Onboarding (Direkter Vorgesetzter))" id="checkbox28">
+                                                    <label class="custom-control-label" for="checkbox28">Information über relevante Betriebsvereinbarungen, siehe dazu auch Sharepoint Dokumente für Onboarding (Direkter Vorgesetzter))</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker29" data-toggle="datetimepicker" data-target="#datetimepicker29">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input class="custom-control-input" type="checkbox" value="Aufsetzen von Zielen (Direkter Vorgesetzter)" id="checkbox29">
+                                                    <label class="custom-control-label" for="checkbox29">Aufsetzen von Zielen (Direkter Vorgesetzter)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker30" data-toggle="datetimepicker" data-target="#datetimepicker30">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Ggf: Dokumentenlager Berechtigung bei Reisswolf beantragen und Einschulung ins Webportal (Vorgesetzter)" id="checkbox-30">
+                                                    <label class="custom-control-label" for="checkbox-30">Ggf: Dokumentenlager Berechtigung bei Reisswolf beantragen und Einschulung ins Webportal (Vorgesetzter)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker31" data-toggle="datetimepicker" data-target="#datetimepicker31">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Einweisung in das Thema Sicherheit und Gesundheit am Arbeitsplatz (Sicherheitsvertrauensperson) und Brandschutz (Brandschutzbeauftragte)" id="checkbox-31">
+                                                    <label class="custom-control-label" for="checkbox-31">Einweisung in das Thema Sicherheit und Gesundheit am Arbeitsplatz (Sicherheitsvertrauensperson) und Brandschutz (Brandschutzbeauftragte)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker32" data-toggle="datetimepicker" data-target="#datetimepicker32">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Visitenkarten, ggf Empfehlungskarten …  (Marketing)" id="checkbox-33">
+                                                    <label class="custom-control-label" for="checkbox-33">Visitenkarten, ggf Empfehlungskarten …  (Marketing)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker33" data-toggle="datetimepicker" data-target="#datetimepicker33">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Signatur Outlook  (Marketing)" id="checkbox-34">
+                                                    <label class="custom-control-label" for="checkbox-34">Signatur Outlook  (Marketing)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker34" data-toggle="datetimepicker" data-target="#datetimepicker34">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="PV-Abwesenheitsnotiz (Quality)" id="checkbox-35">
+                                                    <label class="custom-control-label" for="checkbox-35">PV-Abwesenheitsnotiz (Quality)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker35" data-toggle="datetimepicker" data-target="#datetimepicker35">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Zuweisung der Trainingsinhalte in Plateau (LQO)" id="checkbox-36">
+                                                    <label class="custom-control-label" for="checkbox-36">Zuweisung der Trainingsinhalte in Plateau (LQO)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker36" data-toggle="datetimepicker" data-target="#datetimepicker36">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Unterweisung zur Pharmakovigilanz/Medizinproduktevigilanz (Quality/LSO))" id="checkbox-37">
+                                                    <label class="custom-control-label" for="checkbox-37">Unterweisung zur Pharmakovigilanz/Medizinproduktevigilanz (Quality/LSO))</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker37" data-toggle="datetimepicker" data-target="#datetimepicker37">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Unterschriftenliste aktualisieren (Quality/LSO)" id="checkbox-38">
+                                                    <label class="custom-control-label" for="checkbox-38">Unterschriftenliste aktualisieren (Quality/LSO)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker38" data-toggle="datetimepicker" data-target="#datetimepicker38">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Unterweisung in Datenschutz und Umgang mit Verträgen, Formulare (Anti-Korruption) (Compliance)" id="checkbox-39">
+                                                    <label class="custom-control-label" for="checkbox-39">Unterweisung in Datenschutz und Umgang mit Verträgen, Formulare (Anti-Korruption) (Compliance)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker39" data-toggle="datetimepicker" data-target="#datetimepicker39">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Unterweisung im Verhaltenskodex Pharmig und CSL Behring Verhaltenskodex inkl. Policys (Compliance)" id="checkbox-39">
+                                                    <label class="custom-control-label" for="checkbox-39">Unterweisung im Verhaltenskodex Pharmig und CSL Behring Verhaltenskodex inkl. Policys (Compliance)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker40" data-toggle="datetimepicker" data-target="#datetimepicker40">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Einweisung in allgemeine Themen: Verpflegung, Umgebung, Parken, Info Kurzparkzone (AssGM)" id="checkbox-40">
+                                                    <label class="custom-control-label" for="checkbox-40">Einweisung in allgemeine Themen: Verpflegung, Umgebung, Parken, Info Kurzparkzone (AssGM)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker41" data-toggle="datetimepicker" data-target="#datetimepicker41">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Einführung ins Intranet (iNet, askHR, ESS) (IT)" id="checkbox-41">
+                                                    <label class="custom-control-label" for="checkbox-41">Einführung ins Intranet (iNet, askHR, ESS) (IT)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker42" data-toggle="datetimepicker" data-target="#datetimepicker42">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Schulung Concur und Reisekostenordnung (Selbst am Sharepoint Austria: Links : Schulungen)" id="checkbox-42">
+                                                    <label class="custom-control-label" for="checkbox-42">Schulung Concur und Reisekostenordnung (Selbst am Sharepoint Austria: Links : Schulungen)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker43" data-toggle="datetimepicker" data-target="#datetimepicker43">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Anlage Bankverbindung in Concur (Selbst in Concur)" id="checkbox-43">
+                                                    <label class="custom-control-label" for="checkbox-43">Anlage Bankverbindung in Concur (Selbst in Concur)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker44" data-toggle="datetimepicker" data-target="#datetimepicker44">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Einschulung ins FIORI (Manager)" id="checkbox-44">
+                                                    <label class="custom-control-label" for="checkbox-44">Einschulung ins FIORI (Manager)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker45" data-toggle="datetimepicker" data-target="#datetimepicker45">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Einschulung ARIBA, Dolphin (Finance)" id="checkbox-45">
+                                                    <label class="custom-control-label" for="checkbox-45">Einschulung ARIBA, Dolphin (Finance)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker46" data-toggle="datetimepicker" data-target="#datetimepicker46">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Rundmails: Zugang zu Gruppenverteilern (Manager)" id="checkbox-46">
+                                                    <label class="custom-control-label" for="checkbox-46">Rundmails: Zugang zu Gruppenverteilern (Manager)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker47" data-toggle="datetimepicker" data-target="#datetimepicker47">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Zugang Apps (Marketing)" id="checkbox-47">
+                                                    <label class="custom-control-label" for="checkbox-47">Zugang Apps (Marketing)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-5">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3 d-none d-md-block">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h3 class="title-h3">Nach Probezeit</h3>
+                                        </div>
+                                    </div>                        
+                                    <div class="row group-item">
+                                        <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                            <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker48" data-toggle="datetimepicker" data-target="#datetimepicker48">
+                                            <input type="text" name="abbreviation" value="MM" class="form-control">
+                                        </div>
+                                        <div class="col-md-8 mb-3 d-flex align-items-end">
+                                            <div class="input-group">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" value="Überwachung Probezeit, Unterschriftenberechtigung im Anschluss, Vertrag (Direkter Vorgesetzter)" id="checkbox-48">
+                                                    <label class="custom-control-label" for="checkbox-48">Überwachung Probezeit, Unterschriftenberechtigung im Anschluss, Vertrag (Direkter Vorgesetzter)</label>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                    <div class="row group-item">                                                        
+                                        <div class="col-md-12">                                    
+                                            <textarea class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-5">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <h3 class="title-h3">VERMERKE</h3>
+                                        </div>
+                                        <div class="col-md-4 mb-3 file-group">
+                                            <label for="inputGroupFile01" class="mb-3"><strong>Unterschrift Mitarbeite</strong></label>
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="inputGroupFile01">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3 file-group">
+                                            <label for="inputGroupFile02" class="mb-3"><strong>Unterschrift Manager</strong></label>
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="inputGroupFile02">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="tab-pane fade" id="offboarding" role="tabpanel" aria-labelledby="offboarding-tab">
+                                <h2 class="top-title">Offboarding</h2>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3 d-none d-md-block">
+                                        <h3 class="title-h3">DATUM und KÜRZEL erledigt</h3>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h3 class="title-h3">Vorbereitungen</h3>
+                                    </div>
+                                </div>
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker49" data-toggle="datetimepicker" data-target="#datetimepicker49">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Rückgabe Firmenwagen,  Zutritt Parken, Schlüssel, Tankkarte + Info Reifenlagerung (Finance)" id="checkbox-49">
+                                                <label class="custom-control-label" for="checkbox-49">Rückgabe Firmenwagen,  Zutritt Parken, Schlüssel, Tankkarte + Info Reifenlagerung (Finance)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker50" data-toggle="datetimepicker" data-target="#datetimepicker50">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Rückgabe Kreditkarte, Rückzahlung RK-Vorschuss (Finance)" id="checkbox-50">
+                                                <label class="custom-control-label" for="checkbox-50">Rückgabe Kreditkarte, Rückzahlung RK-Vorschuss (Finance)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker51" data-toggle="datetimepicker" data-target="#datetimepicker51">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Rückgabe Zutrittskarte und ggf. Zutrittsschlüssel (Ass Gm)" id="checkbox-51">
+                                                <label class="custom-control-label" for="checkbox-51">Rückgabe Zutrittskarte und ggf. Zutrittsschlüssel (Ass Gm)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker52" data-toggle="datetimepicker" data-target="#datetimepicker52">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Meldungen hinsichtlich Krankenkasse (Finance PwC)" id="checkbox-52">
+                                                <label class="custom-control-label" for="checkbox-52">Meldungen hinsichtlich Krankenkasse (Finance PwC)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker53" data-toggle="datetimepicker" data-target="#datetimepicker53">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Übernahme oder Abmeldung Gruppenkrankenkassa (Finance)" id="checkbox-53">
+                                                <label class="custom-control-label" for="checkbox-53">Übernahme oder Abmeldung Gruppenkrankenkassa (Finance)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker54" data-toggle="datetimepicker" data-target="#datetimepicker54">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Abmeldung Unfallversicherung (Finance)" id="checkbox-54">
+                                                <label class="custom-control-label" for="checkbox-54">Abmeldung Unfallversicherung (Finance)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker55" data-toggle="datetimepicker" data-target="#datetimepicker55">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Ggf Dokumentlager Reisswolf: Account löschen (GM)" id="checkbox-55">
+                                                <label class="custom-control-label" for="checkbox-55">Ggf Dokumentlager Reisswolf: Account löschen (GM)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker56" data-toggle="datetimepicker" data-target="#datetimepicker56">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Rückgabe Firmenbesitz (Laptop, iPad, iPhone (AssGM) Roll-ups, Werbematerial (Marketing)" id="checkbox-56">
+                                                <label class="custom-control-label" for="checkbox-56">Rückgabe Firmenbesitz (Laptop, iPad, iPhone (AssGM) Roll-ups, Werbematerial (Marketing)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker57" data-toggle="datetimepicker" data-target="#datetimepicker57">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="IAMS: Löschen K-Zugriff (Finance) " id="checkbox-57">
+                                                <label class="custom-control-label" for="checkbox-57">IAMS: Löschen K-Zugriff (Finance) </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker58" data-toggle="datetimepicker" data-target="#datetimepicker58">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Schlüssel (Rollcontainer, Aktenschrank etc) (Manager)" id="checkbox-58">
+                                                <label class="custom-control-label" for="checkbox-58">Schlüssel (Rollcontainer, Aktenschrank etc) (Manager)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker59" data-toggle="datetimepicker" data-target="#datetimepicker59">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Systemzutritte löschen (SAP, ggf Bürgerkarte, ggf Firmenbuch) (IT/GM)" id="checkbox-59">
+                                                <label class="custom-control-label" for="checkbox-59">Systemzutritte löschen (SAP, ggf Bürgerkarte, ggf Firmenbuch) (IT/GM)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                                <div class="row group-item">
+                                    <div class="col-md-4 mb-3 wrap-datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input datetimepicker" id="datetimepicker-60" data-toggle="datetimepicker" data-target="#datetimepicker-60">
+                                        <input type="text" name="abbreviation" value="MM" class="form-control">
+                                    </div>
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div class="input-group">
+                                            <div class="custom-control custom-checkbox form-check">
+                                                <input type="checkbox" class="custom-control-input" value="Abschließen des Austritts in Workday (Manager)" id="checkbox-60">
+                                                <label class="custom-control-label" for="checkbox-60">Abschließen des Austritts in Workday (Manager)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <h3 class="title-h3">VERMERKE</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3 group-item mb-0">                           
+                                        <textarea class="form-control" style="min-height:100%"></textarea>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="file-group">
+                                            <label for="inputGroupFile01" class="mb-3"><strong>Unterschrift Mitarbeite</strong></label>
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="inputGroupFile01">
+                                            </div>
+                                        </div>
+                                        <div class="file-group">
+                                            <label for="inputGroupFile02" class="mb-3"><strong>Unterschrift Manager</strong></label>
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="inputGroupFile02">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="maternity-leave" role="tabpanel" aria-labelledby="maternity-leave-tab">
+                                <h2 class="top-title">Maternity</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-checklist text-end">
+                    <button id="Save" class="button-red">Save</button>
+                    <button id="export-pdf" class="button-red">PDF Export <i class="fas fa-file-export"></i></button>
+                </div>
+            </div>
+        </main>
+
+    @include('footer')
