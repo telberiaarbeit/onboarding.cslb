@@ -31,11 +31,11 @@ class LoginController extends Controller
     public function customLogin(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'email' => 'required',
             'password' => 'required'
         ]);
         
-        $user = \App\Models\User::where('name', $request->get('name'))->first();
+        $user = \App\Models\User::where('email', $request->get('email'))->first();
 
         if(!empty($user) && $user->password == md5($request->get('password'))){
             Auth::login($user, true);
@@ -57,7 +57,7 @@ class LoginController extends Controller
     }
     public function username()
     {
-        return 'name';
+        return 'email';
     }
     function postRegister(Request $request) {
 

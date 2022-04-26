@@ -3,8 +3,8 @@
 @import 'tailwindcss/utilities'; */
 
 body {
-	line-height: 1;
-	font-family: Arial;
+   line-height: 1;
+   font-family: Arial;
 }
 .wrap-login .webapp-logo {
    margin-bottom: 30px;
@@ -15,7 +15,7 @@ body {
    flex-wrap: wrap;
    justify-content: center;
    align-items: center;
-	min-height: 100vh;
+   min-height: 100vh;
 }
 .wrap-login #webapp-form-login {
    margin-left: auto;
@@ -24,7 +24,7 @@ body {
    width: 90%;
 }
 .form-item {
-	margin-bottom: 29px;
+   margin-bottom: 29px;
 }
 #webapp-form-login input[type=text], #webapp-form-login input[type=password] {
    margin-top: 0px;
@@ -73,6 +73,9 @@ body {
    margin-bottom: 50px;
    padding-bottom: 50px;
    border-bottom: 1px solid red;
+}
+.block-title .group-item {
+   margin-bottom: 0px;
 }
 .block-title label {
    font-weight: 600;
@@ -244,6 +247,7 @@ body {
    cursor: pointer;
    pointer-events: none;
 }
+.datetimepicker-input ~ .input-abbreviation,
 .datetimepicker-input ~ input[name="abbreviation"] {
    position: absolute;
    top: 0px;
@@ -278,8 +282,10 @@ body {
    font-size: 17px;
    opacity: 0;
    visibility: hidden;
-   }
-.show-name input[name="abbreviation"], .show-name.wrap-datetimepicker:before {
+}
+.show-name .input-abbreviation,
+.show-name input[name="abbreviation"],
+.show-name.wrap-datetimepicker:before {
    opacity: 1;
    visibility: visible;
 }
@@ -472,9 +478,12 @@ button.add-to-task {
 .wrap-checklist .tab-field .custom-control.custom-checkbox > span > span {
    display: inline-block;
 }
-.input-group .list-group > span > span {
+.input-group .list-group .edit-user {
+   font-size: 0.9em;
    cursor: pointer;
-   text-decoration: underline;
+}
+.input-group .list-group .edit-user i {
+   margin-left: 2px;
 }
 .input-group .list-group span:not(:last-child):after {
    content: ' / ';
@@ -491,6 +500,9 @@ button.add-to-task {
 }
 .date-field .input-group {
    flex-wrap: nowrap;
+}
+.date-field .input-group .datetimepicker-input {
+   pointer-events: auto!important;
 }
 .form-group ul {
    list-style: none;
@@ -580,7 +592,9 @@ button.add-to-task {
    animation: spin 2s linear infinite;
    display: inline-block;
 }
-
+.checklist-group > p > span:not(:last-child):after{
+   content: ', ';
+}
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -653,6 +667,10 @@ button.add-to-task {
    .dashboard .task-status span.status {
       margin-right: 10px;
    }
+   body .user-page .btn, body #boarding-unterlagen-page .btn {
+      padding: 6px 15px;
+      font-size: 12px;
+   }
 
 }
 @media (max-width: 736px) {
@@ -719,4 +737,139 @@ button.add-to-task {
    body .detail-page .button-main {
       padding: 10px 15px;
    }
+}
+.wrap-diplay-image {
+   display: inline-block;
+   position: relative;
+}
+.dislay-sign {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   width: 100%;
+   z-index: 1;
+   background-color: #fff;
+}
+.filter-dashboard {
+   position: relative;
+}
+.filter-dashboard .label-filter {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   cursor: pointer;
+}
+.filter-dashboard .selected-option {
+   padding: 15px 12px 6px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;   
+}
+.filter-dashboard .top-label {
+   position: absolute;
+   top: 0px;
+   transform: translateY(-50%);
+   left: 11px;
+   opacity: 0.68;
+   font-size: 14px;
+}
+.filter-dashboard .list-filter {
+   display: none;
+   position: absolute;
+   top: 100%;
+   left: 0px;
+   background-color: #fff;
+   z-index: 9;
+   width: 100%;
+   list-style: none;
+   border: 1px solid;
+   border-radius: 10px;
+   margin-top: 1px;
+   padding: 0px;
+   max-height: 320px;
+   overflow: auto;
+}
+.filter-dashboard .list-filter > li {
+   padding: 15px 40px 15px 13px;
+   display: block;
+   cursor: pointer;
+   position: relative;
+}
+.filter-dashboard .list-filter > li:not(:first-child):after, .filter-dashboard .label-filter:after {
+   content: "\f0d7";
+   padding: 0 15px;
+   display: inline-block;
+   font-family: "Font Awesome 5 Pro";
+   font-weight: 900;
+   position: absolute;
+   top: 15px;
+   right: 0px;
+}
+.filter-dashboard .list-filter > li > a {
+   font-weight: 600;
+}
+.filter-dashboard .list-filter a {
+   color: #000;
+   display: inline-block;
+   text-decoration: none;
+   width: auto;
+}
+.filter-dashboard .list-filter ul {
+   list-style: none;
+   padding: 0;
+   display: none;
+}
+.filter-dashboard .list-filter ul li {
+   padding: 10px 15px;
+}
+.filter-dashboard .list-filter ul a {
+   display: block;
+   width: 100%;
+}
+.floatingFilter-wrap {
+   position: relative;
+}
+.floatingFilter-wrap label {
+   position: absolute;
+   top: 0px;
+   transform: translateY(-50%);
+   left: 7px;
+   opacity: 0.68;
+   font-size: 14px;
+}
+.floatingFilter-wrap .select2-container--default.select2-container--open.select2-container--below .select2-selection--single,
+.floatingFilter-wrap .select2-container--default .select2-selection--single {
+   border: 0;
+   border-bottom: 1px solid;
+   padding-top: 4px;
+   height: 34px;
+   border-radius: 0px;
+}
+.floatingFilter-wrap .select2-container--default .select2-selection--single .select2-selection__rendered {
+   color: #000;
+   line-height: 30px;
+}
+.select2-results__option--selectable {
+   font-size: 14px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+   border-color: #000 transparent transparent transparent;
+}
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+   border-color: transparent transparent #000 transparent;
+   border-width: 0 4px 5px 4px;
+}
+.custom-checkbox .custom-control-input:disabled:checked~.custom-control-label::before {
+   background-color: red;
+}
+.list-user-edit {
+   max-height: 300px;
+   overflow: auto;
+}
+.action-checklist #save {
+   z-index: 10;
+   position: fixed;
+   bottom: 20px;
+   right: 179px;
+   padding: 15px 20px;
 }

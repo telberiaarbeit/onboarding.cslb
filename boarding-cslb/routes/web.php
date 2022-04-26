@@ -13,42 +13,6 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('login');
-// });
-Route::get('/online-checkliste-create', function() {
-    return view('online-checkliste-create');
-});
-Route::get('/boarding-unterlagen-new', function() {
-    return view('boarding-unterlagen-new');
-});
-Route::get('/online-checkliste', function() {
-    return view('online-checkliste');
-});
-Route::get('/boarding-unterlagen', function() {
-    return view('boarding-unterlagen');
-});
-Route::get('/dashboard', function() {
-    return view('dashboard');
-});
-Route::get('/detail', function() {
-    return view('detail-task');
-});
-Route::get('/task-manager', function() {
-    return view('task-manager');
-});
-Route::get('/new-task', function() {
-    return view('new-task');
-});
-// Route::get('/uploadfile-new', function() {
-//     return view('uploadfile');
-// });
-// Route::post('fileUpload', [
-//    'as' => 'image.add',
-//    'uses' => 'UploadController@fileUpload'
-// ]);
-Route::get('paginate', 'App\Http\Controllers\PaginationController@index');
-
 require __DIR__.'/auth.php';
 
 Route::get('/', '\App\Http\Controllers\Auth\LoginController@showLoginForm')->name('showLogin');
@@ -57,16 +21,43 @@ Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->nam
 Route::get('/register', '\App\Http\Controllers\Auth\LoginController@getRegister')->name('get.register');
 Route::post('/register', '\App\Http\Controllers\Auth\LoginController@postRegister')->name('post.register');
 
-Route::group(['middleware' => ['CheckIdAdmin']], function () {
+//Route::group(['middleware' => ['CheckIdAdmin']], function () {
     Route::prefix('users')->group(function () {
         Route::get('/', '\App\Http\Controllers\UsersController@index');
         Route::post('/store', '\App\Http\Controllers\UsersController@store');
         Route::get('/create', '\App\Http\Controllers\UsersController@create');
         Route::get('/edit/{user}', '\App\Http\Controllers\UsersController@edit');
         Route::put('/update/{user}', '\App\Http\Controllers\UsersController@update');
+        Route::post('/create-group', '\App\Http\Controllers\UsersController@create_group');
     });
     Route::post('/delete', '\App\Http\Controllers\UsersController@delete_user');
+//});
+Route::group(['prefix' => 'group-user', 'middleware' => ['auth']], function(){
+    Route::get('/', '\App\Http\Controllers\GroupController@index');
+    Route::get('/edit/{group_id}', '\App\Http\Controllers\GroupController@edit');
+    Route::post('/update/{group_id}', '\App\Http\Controllers\GroupController@update');
+    Route::post('/delete-group', '\App\Http\Controllers\GroupController@delete_group');
 });
-Route::post('/create-group', '\App\Http\Controllers\UsersController@create_group');
+Route::post('/save-group', '\App\Http\Controllers\UsersController@save_group');
 Route::post('/load-group-modal', '\App\Http\Controllers\UsersController@load_group_modal');
 Route::post('/load-user', '\App\Http\Controllers\UsersController@load_user_group');
+Route::post('/open-user-group', '\App\Http\Controllers\UsersController@open_user_group');
+Route::post('/open-popup', '\App\Http\Controllers\UsersController@open_popup');
+Route::post('/create_new_group', '\App\Http\Controllers\UsersController@create_new_group');
+
+Route::get('/check-deadline', '\App\Http\Controllers\DashboardController@check_deadline');
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth.basic']], function(){
+    Route::get('/', '\App\Http\Controllers\DashboardController@list');
+    Route::post('/update/', '\App\Http\Controllers\DashboardController@update_task');
+});
+Route::group(['prefix' => 'boarding-unterlagen', 'middleware' => ['auth.basic']], function(){
+    Route::get('/', '\App\Http\Controllers\DashboardController@index');
+    Route::get('/create', '\App\Http\Controllers\DashboardController@create')->name('create.checklist');
+    Route::post('/store', '\App\Http\Controllers\DashboardController@store')->name('store.checklist');
+    Route::post('/update/{id}', '\App\Http\Controllers\DashboardController@update')->name('update.checklist');
+    Route::delete('/destroy/{id}', '\App\Http\Controllers\DashboardController@destroy')->name('destroy.checklist');
+    Route::get('/edit/{id}', '\App\Http\Controllers\DashboardController@edit')->name('edit.checklist');
+});
+
+//route checktask
+Route::post('/checktask', '\App\Http\Controllers\UsersController@postCheckTask')->name('post.task');

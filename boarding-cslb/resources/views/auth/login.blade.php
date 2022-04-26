@@ -21,18 +21,18 @@
                             <img src="{{ url('resources/images/webapp-logo.png') }}" class="webapp-logo" height="84" width="126" />
                         </div>
                         <div class="col-md-12 form-item">
-                            {{-- <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Benutzer">
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Benutzer">
                             <small class="error-msg">
                                 @if ($errors->has('email'))
                                     {{ $errors->first('email') }}
                                 @endif
-                            </small> --}}
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Benutzer">
+                            </small> 
+                            {{-- <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Benutzer">
                             <small class="error-msg">
                                 @if ($errors->has('name'))
                                     {{ $errors->first('name') }}
                                 @endif
-                            </small>
+                            </small> --}}
                         </div>
                         <div class="col-md-12 form-item">
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Passwort">

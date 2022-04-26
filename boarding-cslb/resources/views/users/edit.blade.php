@@ -100,6 +100,50 @@
 
                                     <div class="form-group">
 
+                                        <strong class="pb-2">Full Name:</strong>
+
+                                        <input type="text" name="full_name" class="form-control" placeholder="Full Name:" value="{{ $user->full_name }}">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+
+                                    <div class="form-group">
+
+                                        <strong class="pb-2">Abbreviations</strong>
+
+                                        <input type="text" name="abbreviations" class="form-control" placeholder="Abbreviations" value="{{ $user->abbreviations }}">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+
+                                    <div class="form-group">
+
+                                        <strong class="pb-2">Position:</strong>
+                                        <select class="form-control text-capitalize" name="position">
+                                            <option value="">Select Position</option>
+                                            @foreach (DB::table('position')->get() as $position) 
+                                                @if ($position->id == DB::table('users')->where('id',$user->id)->value('position')) 
+                                                    <option value="{{$position->id}}" selected>{{$position->name}}</option>
+                                                @else 
+                                                    <option value="{{$position->id}}">{{$position->name}}</option>
+                                                @endif                                            
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+
+                                    <div class="form-group">
+
                                         <strong class="pb-2">Email:</strong>
 
                                         <input type="email" name="email" class="form-control" placeholder="Email" value="{{ $user->email }}">
@@ -115,6 +159,27 @@
                                         <strong class="pb-2">Password:</strong>
 
                                         <input type="password" name="password" class="form-control" placeholder="Password">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+
+                                    <div class="form-group">
+
+                                        <strong class="pb-2">Group:</strong>
+                                        <select class="form-control" name="group_id">
+                                            <option value="">Select Group</option>
+                                            @foreach (DB::table('group_users')->get() as $group)
+                                                @if ($group->group_id == DB::table('users')->where('id',$user->id)->value('group_id'))
+                                                    <option value="{{$group->group_id}}" selected>{{$group->group_name}}</option>
+                                                @else
+                                                    <option value="{{$group->group_id}}">{{$group->group_name}}</option>
+                                                @endif
+                                                
+                                            @endforeach
+                                        </select>
 
                                     </div>
 

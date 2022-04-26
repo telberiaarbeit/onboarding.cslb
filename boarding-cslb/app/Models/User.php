@@ -10,7 +10,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory;
-    protected $table = 'users';
-    protected $guarded = [];
+    // use HasFactory;
+    // protected $table = 'users';
+    // protected $guarded = [];
+    public $timestamps = false;
+    protected $fillable = [
+        'is_admin', 'name', 'full_name', 'abbreviations','position','manager','group_id','email','password'
+    ];
 }

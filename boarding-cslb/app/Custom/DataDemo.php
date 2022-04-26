@@ -3184,9 +3184,4 @@ class DataDemo{
     	];
     }
 
-    public static function allTask() {
-    	return [
-    	];
-    }
-
 } ?>

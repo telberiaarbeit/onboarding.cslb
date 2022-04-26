@@ -7,7 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Boarding Cslb') }}</title>
+    <title>CSLB Onboarding</title>
+    <!-- <title>{{ config('app.name', 'Boarding Cslb') }}</title> -->
 
     <!-- Scripts -->
     <script src="{{ url('resources/js/app.js') }}" defer></script>
@@ -64,18 +65,10 @@
          <header id="site-header">
             <div class="container">
                 <div class="navbar navbar-expand-md p-0 justify-content-between">
-                    <?php
-                        $user_id = Auth::id();
-                        if($user_id == 1){ ?>
-                        <a class="navbar-brand p-0" href="{{ url('/dashboard') }}">
-                            <img src="{{url('resources//images/logo.png')}}" alt="logo-header">
-                        </a>
-                    <?php    }else{
-                    ?>
-                        <a class="navbar-brand p-0" href="{{ url('/boarding-unterlagen') }}">
-                            <img src="{{url('resources//images/logo.png')}}" alt="logo-header">
-                        </a>
-                    <?php } ?>
+                    @php $home = url('/'); @endphp
+                    <a class="navbar-brand p-0" href="{{ url('/boarding-unterlagen') }}">
+                        <img src="{{url('resources//images/logo.png')}}" alt="logo-header">
+                    </a>
                     <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button> -->
@@ -102,15 +95,15 @@
                                 @endif
                             @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="https://www.telberia.com/projects/boarding-cslb/dashboard">Admin-Dashboard</a>
+                                    <a class="nav-link" href="{{$home}}/dashboard">Dashboard</a>
                                 </li>
                                 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="https://www.telberia.com/projects/boarding-cslb/boarding-unterlagen">Alle Online-Checklisten</a>
+                                    <a class="nav-link" href="{{$home}}/boarding-unterlagen">Alle Online-Checklisten</a>
                                 </li>
                                 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="https://www.telberia.com/projects/boarding-cslb/users">Benutzerliste</a>
+                                    <a class="nav-link" href="{{$home}}/users">Benutzerliste</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" style="color: #fff;" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -154,4 +147,104 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{ asset('/resources/js/moment-timezone-with-data.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/resources/js/de.js') }}"></script>
+@if(Auth::check() && Auth::user()->is_admin == 1)
+<script src="https://chat.codemenschen.at/js/socket.io-v4.js"></script>
+<link href="https://chat.codemenschen.at/css/codemenschen-feedback-form.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://chat.codemenschen.at/css/cropper.min.css">
+<script type="text/javascript" src="https://chat.codemenschen.at/js/cropper.min.js"></script>
+<script type="text/javascript" src="https://chat.codemenschen.at/js/html2canvas.min.js"></script>
+<script type="text/javascript" src="https://chat.codemenschen.at/js/create-form.js"></script>
+<script type="text/javascript">CODEMENCHENS.init(["CSL - Onboarding Client", "1929", "CSL - Onboarding", window.location.href]);CODEMENCHENS.createForm();</script>
+<script type="text/javascript" src="https://chat.codemenschen.at/js/codemenschen-feedback-form.js"></script>
+<script src="{{ asset('/resources/js/main.js') }}" defer></script>
+@endif
+<script>
+    jQuery(document).ready(function($){
+        if($('.user-page').length) {
+            $(".deletebtn").click(function(){
+                var BASE_URL = {!! json_encode(url('/')) !!}
+                var user_current = $(this).attr('id');
+                var token = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    header:{
+                        'X-CSRF-TOKEN': token
+                    },
+                    url: BASE_URL + "/delete",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        UserId: user_current,
+                    },
+                    success: function(res) {
+                        $('.popup-delete').modal('hide');
+                        if(res.delete == 1) {
+                            alert("Delete user success!");
+                            setTimeout(function(){
+                                location.reload();
+                            }, 1000);
+                        }else{
+                            // $('.popup-delete').modal('hide');
+                            alert('Cant deleted User!');
+                        }
+                        
+                    }
+                });
+            });
+            $(".create-new-group").click(function(){
+                var BASE_URL = {!! json_encode(url('/')) !!}
+                var user_current = $(this).attr('id');
+                var token = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    header:{
+                        'X-CSRF-TOKEN': token
+                    },
+                    url: BASE_URL + "/create_new_group",
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(res) {
+                        $('#create-new-group .list-user').html(res.html);
+                    $('#create-new-group').modal('show');                     
+                    }
+                });  
+            });
+            $("#create-new-group #form-group").submit(function(event){
+                event.preventDefault();
+                var BASE_URL = {!! json_encode(url('/')) !!};
+                var name_group = $('#group_name').val();
+                var list_user = $('input[name="list_user"]').val();
+                var token = $('meta[name="csrf-token"]').attr('content');
+                if(name_group=="") {
+                    $('#group_name').css('border-color','red');
+                    $('#form-group .input-group').append('<p class="error" style="padding: 7px 15px;color:red;font-size: 13px;">Please enter the group name</p>');
+                } else {
+                    $('#form-group .input-group .error').remove();
+                    $('#group_name').removeAttr('style');
+                    $.ajax({
+                        header:{
+                            'X-CSRF-TOKEN': token
+                        },
+                        url: BASE_URL + "/save-group",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            name_group:name_group,
+                            list_user:list_user,
+                        },
+                        success: function(res) {
+                            if(res.create == 1) {
+                                $('#create-new-group').modal('hide');
+                                event.currentTarget.submit();
+                            }else{
+                                $('#form-group .input-group').append('<p class="error" style="padding: 7px 15px;color:red;font-size: 13px;">Group already exists</p>');
+                            }          
+                        },
+                        error: function() {
+                            console.log("error");
+                        }
+                    });
+                }
+            });
 
+        }
+    })
+</script>

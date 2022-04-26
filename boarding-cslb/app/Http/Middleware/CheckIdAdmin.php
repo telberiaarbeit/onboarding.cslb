@@ -17,11 +17,11 @@ class CheckIdAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check() && Auth::user()->id == 1)
+        if(Auth::check() && Auth::user()->is_admin == 1)
         {
             return $next($request);
         } else {
-            return redirect('/online-checkliste?id='.Auth::user()->id.'&tabname=onboarding');
+            return redirect('/boarding-unterlagen');
         }
     }
 }
