@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <div class="row inner-block-title">
                         <!-- Name Mitarbeiter -->
-                        <div class="group-item col-md-6">
+                        <div class="group-item col-md-12">
                             <div class="form-group input-group">
                                 <span class="has-float-label">
                                     <input type="text" class="form-control" name="floatingName" id="floatingName" placeholder="" value="{{ $full_name }}">
@@ -23,9 +23,26 @@
                             </div>
                         </div>
                         <!-- end Name Mitarbeiter -->
-
+                        <!-- Position -->
+                        <div class="group-item col-md-12">
+                            <div class="form-group input-group position-tags-group">
+                                <span class="has-float-label">
+                                    <label for="floatingSelect">Funktion/Job title:</label>
+                                    <div class="group-item-select">
+                                        <select class="form-select form-control position-tags" name="floatingSelect[]" id="floatingSelect" aria-label="Funktion/Job title:" multiple="multiple">
+                                            @if( $list_position )
+                                                @foreach( $list_position as $position )
+                                                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- end position -->
                         <!-- Name Vorgesetzter -->
-                        <div class="group-item col-md-6">
+                        <div class="group-item col-md-12">
                             <div class="form-group input-group">
                                 <span class="has-float-label">
                                     <input type="text" class="form-control" name="name_vorgesetzter" id="floatingSuperior" placeholder="" value="{{ $full_name }}">                                              
@@ -33,32 +50,7 @@
                                 </span>
                             </div>
                         </div>
-                        <!-- end Name Vorgesetzter -->
-                        <!-- Position -->
-                        <div class="group-item col-md-6">
-                            <div class="form-group input-group">
-                                <span class="has-float-label">
-                                    <select class="form-select form-control" name="floatingSelect" id="floatingSelect" aria-label="Funktion/Job title:">
-                                        @if( $list_position )
-                                            @foreach( $list_position as $position )
-                                                <option value="{{ $position->id }}">{{ $position->name }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    <label for="floatingSelect">Funktion/Job title:</label>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- end position -->
-
-                        <div class="group-item col-md-6">
-                            <div class="form-group input-group">
-                                <span class="has-float-label">
-                                    <input type="text" class="form-control" name="description" id="description" placeholder="" value="">                                              
-                                    {{-- <label for="floatingName">Description:</label> --}}
-                                </span>
-                            </div>
-                        </div>   
+                        <!-- end Name Vorgesetzter -->         
                     </div>
                 </div>
             </div> 
@@ -103,19 +95,10 @@
                                             <div class="group-item col-md-6 mb-5">
                                                 <div class="input-group align-items-end">
                                                     <div class="custom-control custom-checkbox mr-sm-2 form-check">
-                                                        @if($tab_form->tab_id == 1)
-                                                        <input type="checkbox" name="category_date_detail[cat_1][eintritt][checkbox]" class="custom-control-input" value="1" id="entry_date_onboarding" checked>
-                                                        <label class="custom-control-label" for="entry_date_onboarding">Eintritt Datum</label>
-                                                        @else
                                                         <input type="checkbox" name="category_date_detail[cat_1][eintritt][checkbox]" class="custom-control-input" value="" id="entry_date_onboarding">
                                                         <label class="custom-control-label" for="entry_date_onboarding">Eintritt Datum</label>
-                                                        @endif
                                                     </div>
-                                                        @if($tab_form->tab_id == 1)
-                                                            <input type="text" class="form-control datetimepicker-input datetimepicker" data-toggle="datetimepicker" name="category_date_detail[cat_1][eintritt][datetime]" value="{{date('d.m.Y')}}" style="padding-right: 15px; text-align: left; padding-left: 15px;">
-                                                        @else                                                        
-                                                            <input type="text" class="form-control datetimepicker-input datetimepicker" data-toggle="datetimepicker" name="category_date_detail[cat_1][eintritt][datetime]" value="" style="padding-right: 15px; text-align: left; padding-left: 15px;">
-                                                        @endif
+                                                    <input type="text" class="form-control datetimepicker-input datetimepicker" data-toggle="datetimepicker" name="category_date_detail[cat_1][eintritt][datetime]" value="" style="padding-right: 15px; text-align: left; padding-left: 15px;">
                                                 </div>
                                             </div>
                                         @elseif($loop->index == 1 )
@@ -133,7 +116,7 @@
                                                 <div class="input-group align-items-end">
                                                     <div class="custom-control custom-checkbox mr-sm-2 form-check">
                                                         <input type="checkbox" name="category_date_detail[cat_3][eintritt][checkbox]" class="custom-control-input" value="" id="entry_date_maternity-leave">
-                                                        <label class="custom-control-label" for="entry_date_maternity-leave">Datum Maternity</label>
+                                                        <label class="custom-control-label" for="entry_date_maternity-leave">Eintritt Datum</label>
                                                     </div>
                                                     <input type="text" class="form-control datetimepicker-input datetimepicker" data-toggle="datetimepicker" name="category_date_detail[cat_3][eintritt][datetime]" value="" style="padding-right: 15px; text-align: left; padding-left: 15px;">
                                                 </div>
@@ -142,7 +125,7 @@
                                                 <div class="input-group align-items-end">
                                                     <div class="custom-control custom-checkbox mr-sm-2 form-check">
                                                         <input type="checkbox" name="category_date_detail[cat_3][austritt][checkbox]" class="custom-control-input" value="" id="exit_date_maternity-leave">
-                                                        <label class="custom-control-label" for="exit_date_maternity-leave">Datum Wiedereintritt</label>
+                                                        <label class="custom-control-label" for="exit_date_maternity-leave">Austritt Datum</label>
                                                     </div>
                                                     <input type="text" class="form-control datetimepicker-input datetimepicker" data-toggle="datetimepicker" name="category_date_detail[cat_3][austritt][datetime]" value="" style="padding-right: 15px; text-align: left; padding-left: 15px;">    
                                                 </div>
@@ -161,7 +144,7 @@
                                                 <div class="row">
                                                     <div class="col-md-4 mb-3 d-none d-md-block">
                                                         @if( $category->name != 'Nach Probezeit' )
-                                                            <h3 class="title-h3">Datum und Name erledigt</h3>
+                                                            <h3 class="title-h3">DATUM und KÜRZEL erledigt</h3>
                                                         @endif
                                                     </div>
                                                     <div class="col-md-8 d-flex align-items-start justify-content-between">
@@ -183,9 +166,9 @@
                                                         <div class="row group-item">  
                                                             <div class="col-md-4 mb-3 wrap-datetimepicker">
                                                                 <input type="text" class="form-control datetimepicker-input" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][datetime]" value="">
-                                                                <input type="text" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][abbreviation]" data-val="{{ $abbreviations }}" value="{{ $abbreviations }}" class="form-control input-abbreviation">
+                                                                <input type="text" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][abbreviation]" value="{{ $abbreviations }}" class="form-control input-abbreviation">
                                                             </div>
-                                                            <div class="col-md-8 mb-3 d-flex align-items-end <?php if($task['id'] == 8) { echo 'tage-group'; } ?>">
+                                                            <div class="col-md-8 mb-3 d-flex align-items-end">
                                                                 <div class="input-group" 
                                                                 data-id="{{ $task['id'] }}">
                                                                     <div class="custom-control custom-checkbox form-check">
@@ -194,14 +177,6 @@
                                                                         <label class="custom-control-label" for="{{ $category->id }}_{{ $task['id'] }}">
                                                                         </label>
                                                                         <span>{{ $task['name'] }}
-                                                                            @if( $task['id'] == 8 ) 
-                                                                                <select class="form-select tage-select form-control" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][tage]" id="tage-select">
-                                                                                    <option value=""></option>
-                                                                                    <option value="20">20</option>
-                                                                                    <option value="25">25</option>
-                                                                                    <option value="30">30</option>
-                                                                                </select>
-                                                                            @endif    
                                                                             @isset( $group_users_task[$task['id']] ) 
                                                                                 <span class="list-group has-group">
                                                                                     @foreach( $group_users_task[$task['id']] as $user_group)
@@ -448,12 +423,6 @@
                         @endforeach
                     @endif
                 </ul>
-                <div class="na-check">
-                    <label class="user-task-na">
-                        <span class="name-user">N/A</span>
-                        <input type="checkbox" class="" name="user_id" data-task_id="1" data-group_id="" data-group_name="" data-user_name="" value="0">
-                    </label> 
-                </div>
             </div>
         </div>
         </div>

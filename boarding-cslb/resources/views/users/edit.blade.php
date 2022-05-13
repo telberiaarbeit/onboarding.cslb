@@ -169,10 +169,10 @@
                                     <div class="form-group">
 
                                         <strong class="pb-2">Group:</strong>
-                                        <select class="form-control" name="group_id">
+                                        <select class="form-control selectpicker" name="group_id[]" multiple data-live-search="true">
                                             <option value="">Select Group</option>
                                             @foreach (DB::table('group_users')->get() as $group)
-                                                @if ($group->group_id == DB::table('users')->where('id',$user->id)->value('group_id'))
+                                                @if (in_array($group->group_id, explode(',',DB::table('users')->where('id',$user->id)->value('group_id'))))
                                                     <option value="{{$group->group_id}}" selected>{{$group->group_name}}</option>
                                                 @else
                                                     <option value="{{$group->group_id}}">{{$group->group_name}}</option>

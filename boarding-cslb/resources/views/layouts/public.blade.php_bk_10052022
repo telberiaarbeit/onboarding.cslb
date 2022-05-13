@@ -168,12 +168,6 @@
                 success: function(res) {
                     if(res.load_user_current) {
                         $('#popup-group-user .modal-body > ul').html(res.load_user_group);
-                        $('#popup-group-user .modal-body .user-task-na input').attr('data-task_id', task_id);
-                        if(res.na) {
-                            $('.user-task-na input').prop('checked', true).addClass('active');
-                        } else {
-                            $('.user-task-na input').prop('checked', false).removeClass('active');
-                        }
                         $('#popup-group-user').modal('show');                        
                     }
                 },
@@ -203,12 +197,6 @@
                 success: function(res) {
                     $('#popup-group-user .modal-body > ul').html(res.html);
                     $('#popup-group-user').modal('show');
-                    $('#popup-group-user .modal-body .user-task-na input').attr('data-task_id', task_id);
-                    if(res.na) {
-                        $('.user-task-na input').prop('checked', true).addClass('active');
-                    } else {
-                        $('.user-task-na input').prop('checked', false).removeClass('active');
-                    }
                 }
             });
         });
@@ -216,7 +204,9 @@
             $(this).next().slideDown();
             $(this).closest('li').siblings().find('.list-user').slideUp();
         });
-
+        $(".position-tags").select2({
+            tags: true
+        });
     });
 
     // Covert HTML to PDF file
@@ -224,7 +214,7 @@
 
         var HTML_Width = $("#checklist-page").width();
         var HTML_Height = $("#checklist-page").height();
-        var top_left_margin = 30;
+        var top_left_margin = 15;
         var PDF_Width = HTML_Width+(top_left_margin*2);
         var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
         var canvas_image_width = HTML_Width;

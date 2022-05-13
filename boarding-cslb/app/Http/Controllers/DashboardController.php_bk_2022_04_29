@@ -38,17 +38,12 @@ class DashboardController extends Controller
         if (!empty($list_data)) {
             foreach ($list_data as $item) {
                 $form_id = $item['id'];
-                $total_task = 0;
-                $done_task = 0;
-                $arg_date_details = [];
-                foreach(DB::table('category_date_detail')->where('form_id',$form_id)-> where('confirmed','=','1')->get() as $date_detail) {
-                    if(!in_array($date_detail->tab_id,$arg_date_details)) {
-                        array_push($arg_date_details,$date_detail->tab_id);
-                    }
-                }
-                if(count($arg_date_details) > 0) {               
-                    $total_task = DB::table('task_detail')->where('form_id',$form_id)->whereIn('tab_id',$arg_date_details)->count();
-                    $done_task = DB::table('task_detail')->where('form_id',$form_id)->whereIn('tab_id',$arg_date_details)->whereNotNull('user_confirmed')->count();
+                if(!empty(DB::table('task_detail')->where('form_id',$form_id)->get())) {
+                    $total_task = count(DB::table('task_detail')->where('form_id',$form_id)->get());
+                    $done_task = count(DB::table('task_detail')->where('form_id',$form_id)->where('confirmed','1')->get());
+                } else {
+                    $total_task = 0;
+                    $done_task = 0;
                 }
                 $data[] = [
                     'id' => $item['id'],
@@ -112,25 +107,10 @@ class DashboardController extends Controller
         $tasks = DB::table('list_task')->get();
         if (!empty($tasks)) {
             foreach ($tasks as $task) {
-                if(!empty($task->group_default)) {
-                    $group_default = explode(',',$task->group_default);
-                    $list_user_default = [];
-                    foreach($group_default as $group_default_id) {
-                        foreach( DB::table('users')->where('group_id','LIKE', '%'. $group_default_id.'%')->get() as $user_id_default) {
-                            if(!in_array($user_id_default->id,$list_user_default)) {
-                                array_push($list_user_default,$user_id_default->id);
-                            }
-                        }
-                    }
-                    $str_user_default = implode(',',$list_user_default);
-                } else {
-                    $str_user_default = "";
-                }
                 $list_task[$task->category_id][] = [
                     'id' => $task->id,
                     'name' => $task->name,
                     'category_id' => $task->category_id,
-                    'user_defaults' => $str_user_default
                 ];
             }
         }
@@ -165,7 +145,6 @@ class DashboardController extends Controller
             $name = $request->input('floatingName');
             $position_id = $request->input('floatingSelect');
             $name_vorgesetzter = $request->input('name_vorgesetzter');
-            
 
             $data = [
                 'name' => $name,
@@ -173,13 +152,6 @@ class DashboardController extends Controller
                 'position_id' => $position_id,
                 'name_vorgesetzter' => $name_vorgesetzter,
             ];
-
-            
-            $description = $request->input('description');
-            if(!empty($description)) {
-                $data['description'] = $description;
-            }
-
             $form_id = Dashboard::create($data);
             if ($form_id) {
                 if ($request->has('category_date_detail')) {
@@ -234,7 +206,6 @@ class DashboardController extends Controller
                 if ($request->has('task_detail')) {
                     $task = [];
                     $tasks_detail = $request->input('task_detail');
-                    
                     foreach ($tasks_detail as $task_detail) {
 
                         if (isset($task_detail['checkbox']) && !empty($task_detail['checkbox'])) {
@@ -247,10 +218,9 @@ class DashboardController extends Controller
                         if (isset($task_detail['datetime']) && !empty($task_detail['datetime'])) {
                             $task['created'] = date("Y-m-d", strtotime($task_detail['datetime']));
                         }
-                      
-                        if (isset($task_detail['ids']) && !empty($task_detail['ids']) || isset($task_detail['ids']) && $task_detail['ids'] == 0) {
+
+                        if (isset($task_detail['ids']) && !empty($task_detail['ids'])) {
                             $ids = explode(',', $task_detail['ids']);
-                            
                             foreach ($ids as $id) {
                                 $task = [
                                     'form_id' => $form_id->id,
@@ -259,11 +229,9 @@ class DashboardController extends Controller
                                     'task_id' => $task_detail['task_id'],
                                     'user_id' => $id,
                                 ];
-                                if($task_detail['task_id'] == 8 && !empty($task_detail['tage'])) {
-                                    $task['tage'] = $task_detail['tage'];
-                                }
+
                                 $create_sub = TaskDetail::create($task);
-                            }   
+                            }
                         }
                     }
                 }
@@ -302,12 +270,12 @@ class DashboardController extends Controller
 
             if ($form_id) {
                 $msg_create = [
-                    'msg' => 'Schaffen Sie Erfolg!',
+                    'msg' => 'Create success!',
                     'code' => 200
                 ];
             } else {
                 $msg_create = [
-                    'msg' => 'Schaffe Misserfolg!',
+                    'msg' => 'Create failure!',
                     'code' => 400
                 ];
             }
@@ -340,11 +308,6 @@ class DashboardController extends Controller
                 'position_id' => $position_id,
                 'name_vorgesetzter' => $name_vorgesetzter,
             ];
-
-            $description = $request->input('description');
-            if(!empty($description)) {
-                $data['description'] = $description;
-            }
 
             $update = Dashboard::where(['id' => $id])->update($data);
 
@@ -386,8 +349,8 @@ class DashboardController extends Controller
 
                 $tasks_detail = $request->input('task_detail');
                 foreach ($tasks_detail as $task_detail) {
-                    
-                    if (isset($task_detail['ids']) && !empty($task_detail['ids']) || isset($task_detail['ids']) && $task_detail['ids'] == 0) {
+
+                    if (isset($task_detail['ids']) && !empty($task_detail['ids'])) {
                         $user_ids = explode(',', $task_detail['ids']);
                         $create_arr = [];
                         foreach ($user_ids as $user_id) {
@@ -399,17 +362,13 @@ class DashboardController extends Controller
                             } else {
                                 $task_update['confirmed'] = 0;
                             }
-
                             if (isset($task_detail['datetime']) && !empty($task_detail['datetime'])) {
                                 $task_update['created'] = date("Y-m-d", strtotime($task_detail['datetime']));
                             }
 
-                            if (isset($task_detail['tage']) && !empty($task_detail['tage'])) {
-                                $task_update['tage'] = $task_detail['tage'];
-                            }
-
                             $task_item = TaskDetail::where(['form_id' => $id, 'user_id' => $user_id, 'task_id' => $task_detail['task_id']])->first();
                             if ($task_item) {
+
                                 $update_task = TaskDetail::where('id', $task_item->id)->update($task_update);
                             } else {
 
@@ -455,12 +414,12 @@ class DashboardController extends Controller
 
             if ($update) {
                 $msg_update = [
-                    'msg' => 'Speichern erfolgreich!',
+                    'msg' => 'Update success!',
                     'code' => 200
                 ];
             } else {
                 $msg_update = [
-                    'msg' => 'Fehler speichern!',
+                    'msg' => 'Update failure!',
                     'code' => 400
                 ];
             }
@@ -493,9 +452,7 @@ class DashboardController extends Controller
                     $ids = [];
                     $task_ids = [];
                     $created = '';
-                    $tage = '';
                     $user_confirmed = '';
-                    $user_na = false;
                     $task_item = TaskDetail::where(['form_id' => $id, 'category_id' => $task->category_id, 'task_id' => $task->id])->get();
                     if ($task_item) {
                         $group_users = [];
@@ -514,19 +471,10 @@ class DashboardController extends Controller
                                         ];
                                     }
                                 }
+
                                 $ids[] = $item->user_id;
-                            } else if($item->user_id == 0) {
-                                $group_users[] = [
-                                    'sub_user_id' => 0,
-                                    'sub_full_name' => 'N/A',
-                                    'sub_group_id' =>  '',
-                                    'sub_group_name' => '',
-                                ];
-                                $user_na = true;
-                                $ids[] = 0;
                             }
 
-                            $tage = $item->tage;
                             $task_ids[] = $item->id;
                             $created = $item->created;
                             $user_confirmed = $item->user_confirmed;
@@ -546,18 +494,16 @@ class DashboardController extends Controller
                             $task_abbreviation = $user_info->abbreviations ? $user_info->abbreviations : '';
                             $task_datetime = '';
                         }
-                        
+
                         $list_task[$task->category_id][] = [
                             'id' => $task->id,
                             'name' => $task->name,
                             'category_id' => $task->category_id,
-                            'tage' => $tage,
                             'ids' => implode(',', $ids),
                             'task_ids' => implode(',', $task_ids),
                             'group_users' => $group_users,
                             'created' => $created,
                             'user_confirmed' => $user_confirmed,
-                            'user_na' => $user_na,
                             'task_checkbox' => $task_checkbox,
                             'task_checkbox_class' => $task_checkbox_class,
                             'task_checkbox_show' => $task_checkbox_show,
@@ -569,13 +515,11 @@ class DashboardController extends Controller
                             'id' => $task->id,
                             'name' => $task->name,
                             'category_id' => $task->category_id,
-                            'tage' => '',
                             'ids' => '',
                             'task_ids' => '',
                             'group_users' => [],
                             'created' => '',
                             'user_confirmed' => $user_confirmed,
-                            'user_na' => $user_na,
                             'task_checkbox' => 0,
                             'task_checkbox_class' => '',
                             'task_checkbox_show' => '',
@@ -585,6 +529,7 @@ class DashboardController extends Controller
                     }
                 }
             }
+
 
             $list_group_users = [];
             $group_users = DB::table('group_users')->get();
@@ -646,47 +591,17 @@ class DashboardController extends Controller
         $group_id = 0;
         if (isset($_GET['g']) && $_GET['g'] !== 0) {
             $group_id =  $_GET['g'];
-            $list->where('users.group_id', 'LIKE', '%'.$group_id.'%');           
+            $list->where('users.group_id', $group_id);
+           
         }
 
 
-        $tasks = $list->get(['users.name as user_name', 'users.email', 'task_detail.*', 'list_task.name as task_name', 'category_sub_detail.id as category_id', 'category_sub_detail.created as deadline','group_users.group_name', 'users.group_id as group_id' ]);
+        $tasks = $list->get(['users.name as user_name', 'users.email', 'task_detail.*', 'list_task.name as task_name', 'category_sub_detail.id as category_id', 'category_sub_detail.created as deadline','group_users.group_name' ]);
         //echo '<pre>'; print_r($tasks); exit('debug');
-        $user_open = [];
-        $group_list = [];
-        foreach (DB::table('users')->get() as $users) {
-            if(count(DB::table('task_detail')->where('user_id',$users->id)->where('confirmed','!=','1')->get()) > 0 ) {
-                $user_open_id = $users->id;
-                if(!empty($users->full_name)) {
-                    $user_open_name = $users->full_name;
-                } else {
-                    $user_open_name = $users->name;
-                }
-                $user_open[] = [
-                    'id' => $user_open_id,
-                    'name' => $user_open_name,
-                ];
-                $current_group = explode(',',$users->group_id);
-                foreach($current_group as $group_item) {
-                    if(!in_array($group_item,$group_list)) {
-                        $group_list[] = [$group_item];
-                    }
-                }
-            }
-        }
-        $group_open = [];
-        foreach (DB::table('group_users')->whereIn('group_id',$group_list)->get() as $group_open_item) {
-            $group_open[] = [
-                'group_id' => $group_open_item->group_id,
-                'group_name' => $group_open_item->group_name,
-            ];
-        }
         $data = [
             'tasks' => $tasks,
             'user_id' => $user_id,
             'group_id' => $group_id,
-            'user_open' => $user_open,
-            'group_open' => $group_open,
 
         ];
         return view('dashboard', $data);
@@ -716,6 +631,26 @@ class DashboardController extends Controller
 
     public function check_deadline()
     {
+        //phpinfo(); eixt();
+        // $API_URL = "http://telberia.com/services/cslb_sendmail.php";
+        // $param = [
+        //     'username' => 'user1',
+        //     'password' => 'passuser1',
+        //     'gender'   => 1,
+        // ];
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_URL, $API_URL);
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // //curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        // $return = curl_exec($ch);
+        // curl_close($ch);
+        // echo '<pre>';
+        // var_dump($return);
+        // exit('debug');
         $list = DB::table('task_detail')
             ->join('users', 'users.id', '=', 'task_detail.user_id')
             ->join('list_task', 'list_task.id', '=', 'task_detail.task_id')
@@ -725,13 +660,12 @@ class DashboardController extends Controller
         if ($list) {
             foreach ($list as $task) {
                 //$current_date = date("Y-m-d", strtotime('now'));
-                $current_date = '2022-05-05';
+                $current_date = '2022-04-01';
                 if ($current_date == $task->deadline) {
                     $check_send = Mail::send('emails.deadline', ['task' => $task], function ($message) use ($task) {
                         $message->from('admin@onboarding.cslb.at', 'CSLB Onboarding');
-                        $message->to($task->email, $task->user_name)->subject('Deadline task: '.$task->task_name);
-                        //$message->to('jptesting3@gmail.com', $task->user_name)->subject('Deadline task: ' . $task->task_name);
-                        //$this->send_email();
+                        // $message->to($task->email, $task->user_name)->subject('Deadline task: '.$task->task_name);
+                        $message->to('jptesting3@gmail.com', $task->user_name)->subject('Deadline task: ' . $task->task_name);
                     });
 
                     var_dump($check_send);

@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <div class="row inner-block-title">
                         <!-- Name Mitarbeiter -->
-                        <div class="group-item col-md-6">
+                        <div class="group-item col-md-12">
                             <div class="form-group input-group">
                                 <span class="has-float-label">
                                     <input type="text" class="form-control" name="floatingName" id="floatingName" placeholder="" value="{{ $dashboard->name ?? '' }}">
@@ -23,9 +23,33 @@
                             </div>
                         </div>
                         <!-- end Name Mitarbeiter -->
-
+                        <!-- Position -->
+                        <div class="group-item col-md-12">
+                            <div class="form-group input-group position-tags-group">
+                                <span class="has-float-label">
+                                    <label for="floatingSelect">Funktion/Job title:</label>
+                                    <div class="group-item-select">
+                                        <select class="form-select form-control position-tags" name="floatingSelect[]" id="floatingSelect" aria-label="Funktion/Job title:" multiple="multiple">
+                                            @if( $list_position )
+                                                @foreach( $list_position as $position )
+                                                    <?php 
+                                                    $dashboard_position = explode(',', $dashboard->position_id); 
+                                                    ?>
+                                                    @if(in_array($position->id , $dashboard_position))
+                                                        <option value="{{ $position->id }}" selected="selected">{{ $position->name }}</option>
+                                                    @else
+                                                        <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- end position -->
                         <!-- Name Vorgesetzter -->
-                        <div class="group-item col-md-6">
+                        <div class="group-item col-md-12">
                             <div class="form-group input-group">
                                 <span class="has-float-label">
                                     <input type="text" class="form-control" name="name_vorgesetzter" id="floatingSuperior" value="{{ $dashboard->name_vorgesetzter ?? '' }}">                                             
@@ -33,39 +57,7 @@
                                 </span>
                             </div>
                         </div>
-                        <!-- end Name Vorgesetzter -->   
-
-                        <!-- Position -->
-                        <div class="group-item col-md-6">
-                            <div class="form-group input-group">
-                                <span class="has-float-label">
-                                    <select class="form-select form-control" name="floatingSelect" id="floatingSelect" aria-label="Funktion/Job title:">
-                                        @if( $list_position )
-                                            @foreach( $list_position as $position )
-                                                @if( $dashboard->position_id == $position->id )
-                                                    <option value="{{ $position->id }}" selected>{{ $position->name }}</option>
-                                                @else
-                                                    <option value="{{ $position->id }}">{{ $position->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    <label for="floatingSelect">Funktion/Job title:</label>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- end position -->
-
-                        <div class="group-item col-md-6">
-                            <div class="form-group input-group">
-                                <span class="has-float-label">
-                                    <input type="text" class="form-control" name="description" id="description" placeholder="" value="{{ $dashboard->description ?? '' }}">                                              
-                                    {{-- <label for="floatingName">Description:</label> --}}
-                                </span>
-                            </div>
-                        </div>
-                        
-                              
+                        <!-- end Name Vorgesetzter -->         
                     </div>
                 </div>
             </div> 
@@ -203,7 +195,7 @@
                                                         <div class="group-item">
                                                             @foreach( $sub_detail as $sub_item)
                                                                 @if( $sub_item->tab_id == $tab_form->tab_id && $sub_item->category_id == $category->id)
-                                                                    <input type="text" class="form-control datetimepicker-input datetimepicker"  data-toggle="datetimepicker"  data-target="#datetimepicker-deadline" aria-label="Deadline"  style="padding-left: 15px;pointer-events: auto;"  placeholder="Bitte wählen Sie eine Frist" name="category_sub_detail[{{ $sub_item->id }}]" value="@if($sub_item->created) {{ date('d.m.Y', strtotime($sub_item->created)) }} @endif">
+                                                                    <input type="text" class="form-control datetimepicker-input datetimepicker"  data-toggle="datetimepicker"  data-target="#datetimepicker-deadline" aria-label="Deadline"  style="padding-left: 15px;pointer-events: auto;"  placeholder="Please select a deadline" name="category_sub_detail[{{ $sub_item->id }}]" value="@if($sub_item->created) {{ date('d.m.Y', strtotime($sub_item->created)) }} @endif">
                                                                 @endif
                                                             @endforeach
                                                         </div>
@@ -214,11 +206,11 @@
                                                 @isset( $list_task[$category->id] )  
                                                     @foreach( $list_task[$category->id] as $task)  
                                                         <div class="row group-item">  
-                                                            <div class="col-md-4 mb-3 wrap-datetimepicker {{ $task['task_checkbox_show'] }} @if($task['user_na']) na-abbreviation @endif ">
+                                                            <div class="col-md-4 mb-3 wrap-datetimepicker {{ $task['task_checkbox_show'] }}">
                                                                 <input type="text" class="form-control datetimepicker-input" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][datetime]" value="{{ $task['task_datetime'] }}">
-                                                                <input type="text" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][abbreviation]" class="form-control input-abbreviation" data-val="{{ $task['task_abbreviation'] }}" value=" @if($task['user_na']) N/A @else {{ $task['task_abbreviation'] }} @endif ">
+                                                                <input type="text" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][abbreviation]" class="form-control input-abbreviation" value="{{ $task['task_abbreviation'] }}">
                                                             </div>
-                                                            <div class="col-md-8 mb-3 d-flex align-items-end <?php if($task['id'] == 8) { echo 'tage-group'; } ?>" >
+                                                            <div class="col-md-8 mb-3 d-flex align-items-end">
                                                                 <div class="input-group" data-id="{{ $task['id'] }}">
                                                                     <div class="custom-control custom-checkbox form-check">
                                                                         <!-- <label class="custom-control-label" for="{{ $category->id }}_{{ $task['id'] }}"></label> -->
@@ -232,18 +224,10 @@
                                                                         </label>
                                                                         @endif
                                                                         <span>{{ $task['name'] }}
-                                                                            @if( $task['id'] == 8 ) 
-                                                                                <select class="form-select tage-select form-control" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][tage]" id="tage-select">
-                                                                                    <option value=""></option>
-                                                                                    <option value="20" <?php if($task["tage"] == '20') echo 'selected="selected"'?>>20</option>
-                                                                                    <option value="25" <?php if($task["tage"] == '25') echo 'selected="selected"'?>>25</option>
-                                                                                    <option value="30" <?php if($task["tage"] == '30') echo 'selected="selected"'?>>30</option>
-                                                                                </select>
-                                                                            @endif
                                                                             @if( $task['group_users'] ) 
                                                                                 <span class="list-group has-group">
                                                                                     @foreach( $task['group_users'] as $user_group)
-                                                                                        <span class="edit-user @if($user_group['sub_full_name'] == 'N/A') edit-user-na @endif" data-group-id="{{ $user_group['sub_group_id'] }}" data-group_name="{{ $user_group['sub_group_name'] }}" data-id_user="{{ $user_group['sub_user_id'] }}">{{ $user_group['sub_full_name'] }}<i class="far fa-plus"></i></span>
+                                                                                        <span class="show-user" data-group-id="{{ $user_group['sub_group_id'] }}" data-group_name="{{ $user_group['sub_group_name'] }}" data-id_user="{{ $user_group['sub_user_id'] }}">{{ $user_group['sub_full_name'] }}</span>
                                                                                     @endforeach 
                                                                                 </span> 
                                                                             @else 
@@ -600,12 +584,6 @@
                     @endforeach
                 @endif
             </ul>
-            <div class="na-check">
-                <label class="user-task-na">
-                    <span class="name-user">N/A</span>
-                    <input type="checkbox" class="" name="user_id" data-task_id="1" data-group_id="" data-group_name="" data-user_name="" value="0">
-                </label> 
-            </div>
         </div>
     </div>
     </div>

@@ -24,14 +24,9 @@
                     <div class="floatingFilter-wrap">
                         <select class="form-select form-control floatingFilter" id="floatingFilter-group" aria-label="Sortiermöglichkeit nach Gruppen:">
                             <option value="0">Alle</option>
-                            @php $not_done_user = DB::table('task_detail')->where('confirmed','!=','1')->pluck('user_id'); @endphp
-                            @if(count($not_done_user) > 0 )
-                                @foreach (DB::table('group_users')->get() as $group)
-                                    @if(count(DB::table('users')->whereIn('id', $not_done_user)->where('group_id',$group->group_id)->get()) > 0 )
-                                        <option {{ $group_id == $group->group_id ? 'selected' : '' }} value="{{ $group->group_id }}">{{ $group->group_name }}</option>
-                                    @endif
-                                @endforeach
-                            @endif
+                            @foreach($group_open as $group)
+                                <option {{ $group_id == $group['group_id'] ? 'selected' : '' }} value="{{ $group['group_id'] }}">{{ $group['group_name'] }}</option>
+                            @endforeach
                         </select>
                         <label>Sortiermöglichkeit nach Gruppen:</label>
                     </div>
@@ -40,16 +35,8 @@
                     <div class="floatingFilter-wrap">
                         <select class="form-select form-control floatingFilter" id="floatingFilter" aria-label="Sortiermöglichkeit nach Benutzer:">
                             <option value="0">Alle</option>
-                            @foreach (DB::table('users')->get() as $users)
-                                @if(count(DB::table('task_detail')->where('user_id',$users->id)->where('confirmed','!=','1')->get()) > 0 )
-                                <option {{ $user_id == $users->id ? 'selected' : '' }} value="{{ $users->id }}">
-                                    @if (!empty($users->full_name))
-                                        {{ $users->full_name }}
-                                    @else
-                                        {{ $users->name }}
-                                    @endif
-                                </option>
-                                @endif
+                            @foreach ($user_open as $users)
+                                <option {{ $user_id == $users['id'] ? 'selected' : '' }} value="{{ $users['id'] }}">{{ $users['name'] }}</option>
                             @endforeach
                         </select>
                         <label>Sortiermöglichkeit nach Benutzer:</label>
@@ -89,7 +76,14 @@
                                             name="check_{{ $v->form_id . '_' . $v->task_id }}"
                                             id="{{ $v->form_id . '_' . $v->task_id .'_' . $v->user_id }}">
                                         <label class="custom-control-label pt-1"
-                                            for="{{ $v->form_id . '_' . $v->task_id .'_' . $v->user_id }}">{{ $v->user_name }} <br>( {{$v->group_name}})</label>
+                                            for="{{ $v->form_id . '_' . $v->task_id .'_' . $v->user_id }}">{{ $v->user_name }} <br>( 
+                                                @php
+                                                $arg = [];
+                                                foreach(DB::table('group_users')->whereIn('group_id',explode(',',$v->group_id))->get() as $item_group) {
+                                                    $arg[] = $item_group->group_name;
+                                                }
+                                                echo implode(' / ',$arg);
+                                                @endphp )</label>
                                     </div>
                                 </div>
                                 @endif

@@ -55,7 +55,7 @@
                                             @foreach($users as $user)
                                             <li>
                                                 <div class="custom-control custom-checkbox col-lg-12">
-                                                    @if(!empty($user->group_id))
+                                                    @if(DB::table('users')->where('id',$user->id)->where('group_id','LIKE','%'.$group_id.'%')->count() > 0)
                                                         <input class="custom-control-input check-user-group" data-ondb="1" type="checkbox" checked value="{{$user->id}}" id="{{$user->group_id}}_{{$user->id}}" name="check_{{$user->group_id}}_{{$user->id}}">
                                                     @else
                                                         <input class="custom-control-input check-user-group" data-ondb="0" type="checkbox" value="{{$user->id}}" id="{{$user->group_id}}_{{$user->id}}" name="check_{{$user->group_id}}_{{$user->id}}">

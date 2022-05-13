@@ -21,7 +21,7 @@ class GroupController extends Controller
     public function edit($group_id)
     {
         $group_name = GroupUser::where('group_id', $group_id)->value('group_name');
-        $users = User::whereNull('group_id')->orWhere('group_id', $group_id)->get();
+        $users = User::get();
         $data = [
             'group_id' => $group_id,
             'group_name' => $group_name,
@@ -47,11 +47,19 @@ class GroupController extends Controller
             GroupUser::where('group_id',$group_id)->update($data);
             if(!empty($list_user)){ 
                 $arg_user = explode(",", $list_user);
-                User::whereIn('id', $arg_user)->update(['group_id' => $group_id]);
+                foreach(User::whereIn('id', $arg_user)->get() as $user_in) {
+                    $user_current_group = explode(',',$user_in->group_id);
+                    array_push($user_current_group,$group_id);
+                    User::where('id', $user_in->id)->update(['group_id' => implode(',',$user_current_group)]);
+                } 
             }
             if(!empty($disable_user)){ 
                 $arg_disable_user = explode(",", $disable_user);
-                User::whereIn('id', $arg_disable_user)->update(['group_id' => null]);
+                foreach(User::whereIn('id', $arg_disable_user)->get() as $user_dis) {
+                    $user_current_group = explode(',',$user_dis->group_id);
+                    unset($user_current_group[array_search($group_id, $user_current_group)]);
+                    User::where('id', $user_dis->id)->update(['group_id' => implode(',',$user_current_group)]);
+                } 
             }
             return back()->with('success','Speichern Erfolgreich!');
         }

@@ -36,22 +36,15 @@
                     @isset ($users)
                         @foreach ($users as $user)
                             <div class="row mb-4 py-4 item align-items-start">
-                                <div class="checklist-id col-md-1" data-label="ID">{{ $user->id }}</div>
-                                <div class="checklist-name col-md-3" data-label="Name Mitarbeiter">{{ $user->name }}</div>
-                                <div class="checklist-email col-md-3" data-label="Email">{{ $user->email }}</div>
+                                <div class="checklist-id col-md-1" data-label="ID">{{ $user['id'] }}</div>
+                                <div class="checklist-name col-md-3" data-label="Name Mitarbeiter">{{ $user['name'] }}</div>
+                                <div class="checklist-email col-md-3" data-label="Email">{{ $user['email'] }}</div>
                                 <div class="checklist-group col-md-2" data-label="User group">
-                                    <p>
-                                    @php
-                                    $current_group = DB::table('users')->where('id',$user->id)->value('group_id');
-                                    if(!empty($current_group)) {
-                                        echo DB::table('group_users')->where('group_id',$current_group )->value('group_name');
-                                    }
-                                    @endphp
-                                    </p>
+                                    <p>{{ $user['group_name'] }}</p>
                                 </div>                                
                                 <div class="text-right col-md-3">
-                                    <a class="btn btn-primary" href="{{ url('/users/edit') }}/{{ $user->id }}">Edit</a>
-                                    <button type="submit" class="btn btn-danger delete-user remove-checklist" id="{{ $user->id }}">Remove</button>
+                                    <a class="btn btn-primary" href="{{ url('/users/edit') }}/{{ $user['id'] }}">Edit</a>
+                                    <button type="submit" class="btn btn-danger delete-user remove-checklist" id="{{ $user['id'] }}">Remove</button>
                                 </div>     
 
                             </div>
@@ -86,7 +79,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">New Group</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Neue Gruppe hinzufügen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>

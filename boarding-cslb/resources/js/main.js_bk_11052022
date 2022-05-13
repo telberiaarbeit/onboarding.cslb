@@ -45,24 +45,11 @@ jQuery(document).ready(function($){
             var task_id = $(this).data('task_id');
             var user_id = $(this).val();
             var list_user_val = $('.current_user[id="'+task_id+'_user"]');
-
-            if(list_user_val.val() == 0) {
-                list_user_val.val('');
-                item_abbreviation = list_user_val.parents('.group-item').find('.input-abbreviation');
-                item_abbreviation.attr('value', item_abbreviation.attr('data-val'));
-                list_user_val.parents('.group-item').find('.col-md-4.mb-3').removeClass('na-abbreviation');
-            }
-           
-
             var list_user_id = list_user_val.val().split(",");
             if(list_user_id[0]=="") {
                 list_user_id.shift();
             }
             if($(this).is(':checked')) {
-                // Remove checked input N/A
-                $('#popup-group-user .na-check .user-task-na input').removeClass('active').prop('checked',false);
-                $('.input-group[data-id="'+task_id+'"] .list-group .edit-user-na').remove();
-                
                 if(list_user_id.indexOf(user_id) < 0) {
                     list_user_id.push(user_id);
                     list_user_val.val(list_user_id.toString());
@@ -120,26 +107,8 @@ jQuery(document).ready(function($){
 
         });
 
-        // Event change active checkbox
         $(document).on('change','.user-task-na input', function(e){
-            var task_id = $(this).data('task_id');
-            var item_groupp = $('.input-group[data-id="'+task_id+'"] .list-group');
-            var list_user_val = $('.current_user[id="'+task_id+'_user"]');
-            if($(this).is(':checked')) {
-                $('#popup-group-user .list-user .user-task input').removeClass('active').prop('checked',false);
-                item_groupp.html('<span class="edit-user edit-user-na" data-group-id="" data-id_user="0">N/A<i class="far fa-plus"></i></span>');
-                item_groupp.addClass('has-group');
-                list_user_val.attr('value', 0);
-                $(this).prop('checked',true).addClass('active');
 
-                item_groupp.parents('.group-item').find('.input-abbreviation').attr('value','N/A');
-                item_groupp.parents('.group-item').find('.col-md-4.mb-3').addClass('na-abbreviation');
-            } else {
-                item_groupp.html('');
-                item_groupp.removeClass('has-group');
-                list_user_val.attr('value', '');
-                $(this).prop('checked',false).removeClass('active');
-            }
         });
     }
     if($('#checklist-page')) {
@@ -149,18 +118,12 @@ jQuery(document).ready(function($){
         var yyyy = today.getFullYear();
         today = dd + '.' + mm + '.' + yyyy;
         $(document).on('click','.tab-field input[type="checkbox"]',function(){
-            if($(this).closest('.input-group').find('.current_user').val().length < 1) {
-                alert('Bitte wählen Sie einen Mitarbeiter!');
-                $(this).prop('checked',false);
-                e.preventDefault();
+            if($(this).is(':checked')) {
+                $(this).closest('.group-item').find('.wrap-datetimepicker').addClass('show-name');
+                $(this).closest('.group-item').find('.datetimepicker-input').attr('value', today);                    
             } else {
-                if($(this).is(':checked')) {
-                    $(this).closest('.group-item').find('.wrap-datetimepicker').addClass('show-name');
-                    $(this).closest('.group-item').find('.datetimepicker-input').attr('value', today);                    
-                } else {
-                    $(this).closest('.group-item').find('.wrap-datetimepicker').removeClass('show-name');
-                    $(this).closest('.group-item').find('.datetimepicker-input').removeAttr('value');
-                }
+                $(this).closest('.group-item').find('.wrap-datetimepicker').removeClass('show-name');
+                $(this).closest('.group-item').find('.datetimepicker-input').removeAttr('value');
             }
         });
 
@@ -348,6 +311,5 @@ jQuery(document).ready(function($){
     if($('.selectpicker').length) {
         $('.selectpicker').selectpicker();
     }
-
 
 }) 

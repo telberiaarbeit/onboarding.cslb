@@ -18,14 +18,22 @@ class UsersController extends Controller
 {
     public function index()
     {
-        
-        $collection = User::get();
-         
-        $users = $collection->sortBy('id');
+        $data = [];
+        foreach(User::get() as $user_item) {
+            $arg = [];
+            $current_group = $user_item->group_id;
+            foreach(DB::table('group_users')->whereIn('group_id',explode(',',$current_group))->get() as $item_group) {
+                $arg[] = $item_group->group_name;
+            }
+            $data[] = [
+                "id" => $user_item->id,
+                "name" => $user_item->name,
+                "email" => $user_item->email,
+                "group_name" => implode('/',$arg),
+            ];
+        } 
 
-        $users->all();
-
-        $all_data = $this->paginate($users);
+        $all_data = $this->paginate($data);
 
         $all_data->withPath(url('/users'));
 
@@ -48,7 +56,7 @@ class UsersController extends Controller
     }    
     public function create_group(User $user)
     {    
-        return back()->with('success','Successfully created a group!');
+        return back()->with('success','Erfolgreich eine Gruppe erstellt!');
     }
     public function store(Request $request, User $user){
         $request->validate([
@@ -60,7 +68,7 @@ class UsersController extends Controller
         $request->except(['password']);
         $request->request->add(['password' => $password]);
         $user->create($request->all());
-        return back()->with('success','User created successfully');
+        return back()->with('success','Benutzer erfolgreich angelegt!');
     }
     public function update(Request $request, User $user)
     {
@@ -73,11 +81,10 @@ class UsersController extends Controller
             'abbreviations' => 'nullable',
             'position' => 'nullable'
         ]);
-
         $data = [
             'name' => $request->name, 
             'email' => $request->email,
-            'group_id' => $request->group_id,
+            'group_id' => implode(',', $request->group_id),
             'full_name' => $request->full_name,
             'abbreviations' => $request->abbreviations,
             'position' => $request->position,
@@ -89,7 +96,7 @@ class UsersController extends Controller
 
         $user->update($data);
     
-        return back()->with('success','User updated successfully');
+        return back()->with('success','Benutzer erfolgreich aktualisiert!');
     }
     
     public function delete_user(Request $request, User $user)
@@ -182,75 +189,19 @@ class UsersController extends Controller
     public function open_user_group(Request $request) {         
         $group_id = $_POST['group_id'];
         $task_id = $_POST['task_id'];
-        if(isset($_POST['list_user_id'])) {
+        if(isset($_POST['list_user_id']) || $_POST['list_user_id'] == 0) {
             $list_user = $_POST['list_user_id'];
         } else {
-            $list_user = "0";
+            $list_user = "";
         }
         $group_current = $_POST['group_id'];
         $arg_user = explode(",", $list_user);
         $html = ' ';
         foreach(DB::table('group_users')->get() as $group_users) {
-            $group_item = DB::table('users')->where('group_id',$group_users->group_id)->get();
-            $group_value = DB::table('users')->where('group_id',$group_users->group_id)->value('group_id');
+            $group_item = DB::table('users')->where('group_id','LIKE','%'.$group_users->group_id.'%')->get();
             $group_name = $group_users->group_name;
             $group_id = $group_users->group_id;
-            if(!empty($group_value)) {
-                $html .= '<li>
-                    <div class="select-action">
-                        <div class="select-group">'.$group_name.'</div>
-                    </div>';
-                    if($group_current == $group_id ) {
-                        $html .= '<div class="list-user">
-                        <ul class="inner">';
-                    } else {
-                        $html .= '<div class="list-user" style="display:none;">
-                        <ul class="inner">';
-                    }                    
-                        foreach($group_item as $user_list) {
-                            if(in_array($user_list->id,$arg_user)) {
-                                $html .= '
-                                <li>
-                                    <label class="user-task">
-                                        <span class="name-user">'.$user_list->name.'</span>
-                                        <input type="checkbox" class="active" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_list->name.'" value="'.$user_list->id.'" checked>
-                                    </label> 
-                                </li>';
-                            } else {
-                                $html .= '
-                                <li>
-                                    <label class="user-task">
-                                        <span class="name-user">'.$user_list->name.'</span>
-                                        <input type="checkbox" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_list->name.'" value="'.$user_list->id.'">
-                                    </label> 
-                                </li>';
-
-                            }
-                        }
-
-                    $html .= '
-                        </ul>
-                    </div>
-                </li>';
-            }
-        }
-        return response()->json(['load_user_current'=> '1', 'load_user_group'=> $html]); 
-    }
-    public function open_popup(Request $request) { 
-        if(isset($_POST['list_user'])) {
-            $list_user = $_POST['list_user'];
-        } else {
-            $list_user = "0";
-        }
-        $task_id = $_POST['task_id'];
-        $arg_user = explode(",", $list_user);
-        $html = '';
-        foreach(DB::table('group_users')->get() as $group_users) {
-            $group_item = DB::table('users')->where('group_id',$group_users->group_id)->get();
-            $group_value = DB::table('users')->where('group_id',$group_users->group_id)->value('group_id');
-            $group_name = $group_users->group_name;
-            $group_id = $group_users->group_id;
-            if(!empty($group_value)) {
+            if(count($group_item) > 0) {
                 $html .= '<li>
                     <div class="select-action">
                         <div class="select-group">'.$group_name.'</div>
@@ -284,7 +235,67 @@ class UsersController extends Controller
                 </li>';
             }
         }
-        return response()->json(['open_popup'=> '1', 'html'=> $html]);
+
+        $na = false;
+        if($list_user == '0') {
+            $na = true;
+        }
+        return response()->json(['load_user_current'=> '1', 'load_user_group'=> $html, 'na'=> $na]); 
+    }
+    public function open_popup(Request $request) { 
+        if(isset($_POST['list_user']) || $_POST['list_user_id'] == 0) {
+            $list_user = $_POST['list_user'];
+        } else {
+            $list_user = "";
+        }
+        $task_id = $_POST['task_id'];
+        $arg_user = explode(",", $list_user);
+        $html = '';
+        
+        foreach(DB::table('group_users')->get() as $group_users) {
+            $group_item = DB::table('users')->where('group_id','LIKE','%'.$group_users->group_id.'%')->get();
+            $group_name = $group_users->group_name;
+            $group_id = $group_users->group_id;
+            if(count($group_item) > 0) {
+                $html .= '<li>
+                    <div class="select-action">
+                        <div class="select-group">'.$group_name.'</div>
+                    </div>
+                    <div class="list-user" style="display:none;">
+                        <ul class="inner">';
+                        foreach($group_item as $user_list) {
+                            if(in_array($user_list->id,$arg_user)) {
+                                $html .= '
+                                <li>
+                                    <label class="user-task">
+                                        <span class="name-user">'.$user_list->name.'</span>
+                                        <input type="checkbox" class="active" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_list->name.'" value="'.$user_list->id.'" checked>
+                                    </label> 
+                                </li>';
+                            } else {
+                                $html .= '
+                                <li>
+                                    <label class="user-task">
+                                        <span class="name-user">'.$user_list->name.'</span>
+                                        <input type="checkbox" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_list->name.'" value="'.$user_list->id.'">
+                                    </label> 
+                                </li>';
+
+                            }
+                        }
+
+                    $html .= '
+                        </ul>
+                    </div>
+                </li>';
+            }
+        }
+
+        $na = false;
+        if($list_user == '0') {
+            $na = true;
+        }
+        return response()->json(['open_popup'=> '1', 'html'=> $html, 'na'=> $na]);
     }
 
     //check_task
