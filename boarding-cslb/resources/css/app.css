@@ -595,6 +595,14 @@ button.add-to-task {
 .checklist-group > p > span:not(:last-child):after{
    content: ', ';
 }
+#site-header img {
+   max-width: 189px;
+   image-rendering: -moz-crisp-edges;
+   image-rendering: -o-crisp-edges;
+   image-rendering: -webkit-optimize-contrast;
+   image-rendering: crisp-edges;
+   -ms-interpolation-mode: nearest-neighbor;
+}
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -664,9 +672,9 @@ button.add-to-task {
       text-align: left;
       width: 150px;
    }
-   .dashboard .task-status span.status {
+   /* .dashboard .task-status span.status {
       margin-right: 10px;
-   }
+   } */
    body .user-page .btn, body #boarding-unterlagen-page .btn {
       padding: 6px 15px;
       font-size: 12px;
@@ -701,7 +709,7 @@ button.add-to-task {
       font-size: 12px;
       margin: 0 0 15px;
    }
-   .checklist-id, .checklist-name, .entry-date, .checklist-email  {
+   *[data-label]  {
       max-width: 100%;
       margin-bottom: 10px;
       display: flex;
@@ -713,7 +721,7 @@ button.add-to-task {
    .checklist-action{
       max-width: 100%;
    }
-   .checklist-id:before, .checklist-name:before, .entry-date:before, .checklist-email:before {
+   *[data-label]:before  {
       content: attr(data-label)":";
       font-weight: bold;
    }
