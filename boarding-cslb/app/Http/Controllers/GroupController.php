@@ -68,7 +68,10 @@ class GroupController extends Controller
     {
         $group_id = $request->group_id;
         GroupUser::where('group_id',$group_id)->delete();
-        User::where('group_id', $group_id)->update(['group_id' => null]);
+        $list_group_id = explode(",",User::where('group_id', 'LIKE', '%'.$group_id.'%')->value('group_id'));
+        //$update_group_id = array_splice($list_group_id,array_search($group_id, $list_group_id));
+        //dd($update_group_id );
+        //User::where('group_id', 'LIKE', '%'.$group_id.'%')->update(['group_id' => implode(',',$update_group_id)]);
         return back()->with('success','Erfolgreich Löschen!');
     }
 }

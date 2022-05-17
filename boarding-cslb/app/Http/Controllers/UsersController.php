@@ -81,10 +81,15 @@ class UsersController extends Controller
             'abbreviations' => 'nullable',
             'position' => 'nullable'
         ]);
+        if(!empty($request->group_id)) {
+            $list_group_id = implode(',', $request->group_id);
+        } else {
+            $list_group_id = null;
+        }
         $data = [
             'name' => $request->name, 
             'email' => $request->email,
-            'group_id' => implode(',', $request->group_id),
+            'group_id' => $list_group_id,
             'full_name' => $request->full_name,
             'abbreviations' => $request->abbreviations,
             'position' => $request->position,
@@ -120,7 +125,9 @@ class UsersController extends Controller
             ]);
             $group_id = DB::table('group_users')->where('group_name', '=', $name_group)->value('group_id');
             foreach($arg_user as $arg_user) {
-                DB::table('users')->where('id', $arg_user)->update(['group_id' => $group_id]);
+                $current_group_id = explode(",",DB::table('users')->where('id', $arg_user)->value('group_id'));
+                array_push($current_group_id,$group_id);
+                DB::table('users')->where('id', $arg_user)->update(['group_id' => implode(',',$current_group_id)]);
             }
             return response()->json(['create'=> '1']);
         } else { 
@@ -130,12 +137,7 @@ class UsersController extends Controller
     public function create_new_group(Request $request) {
         $users_html = ' ';
         foreach(DB::table('users')->get() as $user) {
-            if(!empty($user->group_id)) {
-                $users_html .= '<li data-id="'.$user->id.'" class="add-to-group" data-name="'.$user->full_name.'" style="pointer-events: none;opacity: 0.5;">'.$user->full_name.'</li>';
-            } else {
-                $users_html .= '<li data-id="'.$user->id.'" class="add-to-group" data-name="'.$user->full_name.'">'.$user->full_name.'</li>';
-
-            }
+            $users_html .= '<li data-id="'.$user->id.'" class="add-to-group" data-name="'.$user->full_name.'">'.$user->full_name.'</li>';
         }
         return response()->json(['new_group'=> '1', 'html'=> $users_html]);
         
