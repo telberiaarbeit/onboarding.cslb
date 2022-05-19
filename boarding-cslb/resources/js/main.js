@@ -68,22 +68,32 @@ jQuery(document).ready(function($){
                     list_user_val.val(list_user_id.toString());
                 }
                 $(this).addClass('active');
-                $('.user-task input[value="'+user_id+'"]').each(function(){
-                    $(this).prop('checked',true);
-                })
+                $(this).prop('checked',true);
+                // $('.user-task input[value="'+user_id+'"]').each(function(){
+                //     $(this).prop('checked',true);
+                // })
                 var name = $(this).data('user_name'); 
                 var id_user = $(this).val(); 
-                $('.input-group[data-id="'+task_id+'"] .list-group').append('<span class="edit-user" data-group-id="'+$(this).data('group_id')+'" data-group_name="'+$(this).data('group_name')+'" data-id_user="'+id_user+'">'
-                    +name+'<i class="far fa-plus"></i></span>');
+                if( $('.input-group[data-id="'+task_id+'"] .edit-user[data-group-id="'+$(this).data('group_id')+'"]').length){
+                } else {
+                    $('.input-group[data-id="'+task_id+'"] .list-group').append('<span class="edit-user" data-group-id="'+$(this).data('group_id')+'" >'
+                    +$(this).data('group_name')+'<i class="far fa-plus"></i></span>');
+                }
             } else {
                 var index = list_user_id.indexOf(user_id);
                 list_user_id.splice(index, 1);
                 list_user_val.val(list_user_id.toString()); 
-                $('.user-task input[value="'+user_id+'"]').each(function(){
-                    $(this).prop('checked',false);
-                    $(this).removeClass('active');
-                })
-                $('.input-group[data-id="'+task_id+'"] .list-group .edit-user[data-id_user="'+user_id+'"]').remove();        
+                $(this).prop('checked',false);
+                $(this).removeClass('active');
+                // $('.user-task input[value="'+user_id+'"]').each(function(){
+                //     $(this).prop('checked',false);
+                //     $(this).removeClass('active');
+                // });
+                if($(this).closest('.wrap-select-user').find('.active').length) {
+
+                } else {
+                    $('.input-group[data-id="'+task_id+'"] .list-group .edit-user[data-group-id="'+$(this).data('group_id')+'"]').remove();     
+                }   
             }
             // $('.input-group[data-id="'+task_id+'"] .list-group').html("");
             if($('#'+task_id+'_user').val().length > 0) {
@@ -149,18 +159,12 @@ jQuery(document).ready(function($){
         var yyyy = today.getFullYear();
         today = dd + '.' + mm + '.' + yyyy;
         $(document).on('click','.tab-field input[type="checkbox"]',function(){
-            if($(this).closest('.input-group').find('.current_user').val().length < 1) {
-                alert('Bitte wählen Sie einen Mitarbeiter!');
-                $(this).prop('checked',false);
-                e.preventDefault();
+            if($(this).is(':checked')) {
+                $(this).closest('.group-item').find('.wrap-datetimepicker').addClass('show-name');
+                $(this).closest('.group-item').find('.datetimepicker-input').attr('value', today);                    
             } else {
-                if($(this).is(':checked')) {
-                    $(this).closest('.group-item').find('.wrap-datetimepicker').addClass('show-name');
-                    $(this).closest('.group-item').find('.datetimepicker-input').attr('value', today);                    
-                } else {
-                    $(this).closest('.group-item').find('.wrap-datetimepicker').removeClass('show-name');
-                    $(this).closest('.group-item').find('.datetimepicker-input').removeAttr('value');
-                }
+                $(this).closest('.group-item').find('.wrap-datetimepicker').removeClass('show-name');
+                $(this).closest('.group-item').find('.datetimepicker-input').removeAttr('value');
             }
         });
 

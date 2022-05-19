@@ -260,47 +260,38 @@ class DashboardController extends Controller
                     $tasks_detail = $request->input('task_detail');
                     
                     foreach ($tasks_detail as $task_detail) {
-                        
+                        dd($task_detail);
                         if (isset($task_detail['checkbox']) && !empty($task_detail['checkbox'])) {
                             $task['confirmed'] = 1;
                             $task['user_confirmed'] = Auth::id();
                         } else {
                             $task['confirmed'] = 0;
-                            unset($task['user_confirmed']);
                         }
 
                         if (isset($task_detail['datetime']) && !empty($task_detail['datetime'])) {
                             $task['created'] = date("Y-m-d", strtotime($task_detail['datetime']));
                         }
-
-                        if($task['confirmed'] && empty($task_detail['ids'])) {
-                            $ids = [-1];
-                        } elseif(isset($task_detail['ids']) && !empty($task_detail['ids'])) {
+                      
+                        if (isset($task_detail['ids']) && !empty($task_detail['ids']) || isset($task_detail['ids']) && $task_detail['ids'] == 0) {
                             $ids = explode(',', $task_detail['ids']);
-                        } elseif(isset($task_detail['ids']) && $task_detail['ids'] == 0) {
-                            $ids = explode(',', $task_detail['ids']);
-                        } 
-                        
-                        if(isset($ids) && count($ids) > 0) {
+                            
                             foreach ($ids as $id) {
-
-                                $task['form_id'] = $form_id->id;
-                                $task['tab_id'] = $task_detail['tab_form'];
-                                $task['category_id'] = $task_detail['cat_id'];
-                                $task['task_id'] = $task_detail['task_id'];
-                                $task['user_id'] = $id;
-
+                                $task = [
+                                    'form_id' => $form_id->id,
+                                    'tab_id' => $task_detail['tab_form'],
+                                    'category_id' => $task_detail['cat_id'],
+                                    'task_id' => $task_detail['task_id'],
+                                    'user_id' => $id,
+                                ];
                                 if($task_detail['task_id'] == 8 && !empty($task_detail['tage'])) {
                                     $task['tage'] = $task_detail['tage'];
                                 }
-
                                 $create_sub = TaskDetail::create($task);
                             }   
                         }
-
                     }
                 }
-      
+
                 if ($request->has('note_detail')) {
                     $note = [];
                     $notes_detail = $request->input('note_detail');
@@ -327,12 +318,6 @@ class DashboardController extends Controller
                         }
                         if (isset($signature_detail[1]) && !empty($signature_detail[1])) {
                             $signature['unterschrift_manager'] = $signature_detail[1];
-                        }
-                        if (isset($signature_detail[3]) && !empty($signature_detail[3])) {
-                            $signature['user_id_mitarbeiter'] = $signature_detail[3];
-                        }
-                        if (isset($signature_detail[4]) && !empty($signature_detail[4])) {
-                            $signature['user_id_manager'] = $signature_detail[4];
                         }
                         $create_signature = SignatureDetail::create($signature);
                     }
@@ -486,12 +471,6 @@ class DashboardController extends Controller
                     if (isset($signature_detail[1]) && !empty($signature_detail[1])) {
                         $signature['unterschrift_manager'] = $signature_detail[1];
                     }
-                    if (isset($signature_detail[3]) && !empty($signature_detail[3])) {
-                        $signature['user_id_mitarbeiter'] = $signature_detail[3];
-                    }
-                    if (isset($signature_detail[4]) && !empty($signature_detail[4])) {
-                        $signature['user_id_manager'] = $signature_detail[4];
-                    }
                     if (isset($key) && !empty($signature)) {
                         $update_signature = SignatureDetail::where('id', $key)->update($signature);
                     }
@@ -548,7 +527,6 @@ class DashboardController extends Controller
                     if ($task_item) {
                         $group_users = [];
                         foreach ($task_item as $item) {
-                          
                             if ($item->user_id) {
                                 $first_user_info = DB::table('users')->where('id', $item->user_id)->select('full_name', 'group_id')->first();
                                 if (isset($first_user_info->group_id) && !empty($first_user_info->group_id)) {
@@ -588,17 +566,7 @@ class DashboardController extends Controller
                                 ];
                                 $user_na = true;
                                 $ids[] = 0;
-                            } else if($item->user_id == -1) {
-                                $group_users[] = [
-                                    'sub_user_id' => -1,
-                                    'sub_full_name' => '',
-                                    'sub_group_id' =>  '',
-                                    'sub_group_name' => '',
-                                ];
-                                $user_na = false;
-                                $ids[] = -1;
                             }
-
 
                             $tage = $item->tage;
                             $task_ids[] = $item->id;
@@ -639,8 +607,6 @@ class DashboardController extends Controller
                             'task_datetime' => $task_datetime,
                             'arg_user_group' => $arg_user_group_all
                         ];
-
-                        
                     } else {
                         $list_task[$task->category_id][] = [
                             'id' => $task->id,

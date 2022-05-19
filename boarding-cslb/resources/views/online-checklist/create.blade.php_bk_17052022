@@ -209,11 +209,15 @@
                                                                                     @endforeach 
                                                                                 </span> 
                                                                             @else 
-                                                                                @if(!empty($task['group_user_default']))
+                                                                                @if(!empty($task['user_defaults']))
                                                                                 <span class="list-group has-group">
-                                                                                    @foreach($task['group_user_default'] as $group_user_default)
-                                                                                        <span class="edit-user" data-group-id="{{ $group_user_default['id'] }}">
-                                                                                            {{ $group_user_default['name'] }}
+                                                                                    @foreach( DB::table('users')->whereIn('id',explode(',',$task['user_defaults']))->get() as $user_default)
+                                                                                        <span class="edit-user" data-group-id="{{ $user_default->group_id }}" data-id_user="{{ $user_default->id }}">
+                                                                                            @if(!empty($user_default->full_name))
+                                                                                                {{ $user_default->full_name }}
+                                                                                            @else
+                                                                                                {{ $user_default->name }}
+                                                                                            @endif
                                                                                             <i class="far fa-plus"></i>
                                                                                         </span>
                                                                                     @endforeach 
@@ -276,13 +280,9 @@
                                                             <div class="group mb-3">
                                                                 <button type="button" class="button-red" 
                                                                     onclick="submit_canvas(this)" 
-                                                                    data-user_id = "{{ Auth::id() }}" 
-                                                                    data-user_name = "{{ Auth::user()->name }}"
                                                                     data-canvas="canvas_employee-{{ $tab_form->tab_id }}" 
                                                                     data-sigimage="sigimage_employee-{{ $tab_form->tab_id }}" 
-                                                                    data-sigdataurl="sigUrl_employee-{{ $tab_form->tab_id }}"
-                                                                    data-tabID="{{ $tab_form->tab_id }}"
-                                                                    data-user_sign = "use_employee-{{ $tab_form->tab_id }}">
+                                                                    data-sigdataurl="sigUrl_employee-{{ $tab_form->tab_id }}">
                                                                     Einreichen
                                                                 </button>
                                                                 <button type="button" class="button-red" 
@@ -298,12 +298,8 @@
                                                             <input type="hidden" name="signature_detail[{{ $tab_form->tab_id }}][0]" id="sigUrl_employee-{{ $tab_form->tab_id }}" class="form-control" rows="5" />
                                                             <img id="sigimage_employee-{{ $tab_form->tab_id }}" src="" style="display: none;">                                                                  
                                                         </div>
-                                                        <label class="my-4 d-block">
+                                                        <label class="my-4">
                                                             <strong>Unterschrift Mitarbeiter</strong>
-                                                        </label>
-                                                        <label class="my-4 d-block sign_employee">
-                                                            <strong id="user-sign-name-{{ $tab_form->tab_id }}" class="name-user"></strong>
-                                                            <input type="hidden" value="" class="user_sign_staff"  name="signature_detail[{{ $tab_form->tab_id }}][3]" id="user_staff_id_{{ $tab_form->tab_id }}">
                                                         </label>
                                                     </div>
                                                     <div class="col-lg-12 mb-3 file-group">
@@ -317,11 +313,7 @@
                                                                     onclick="submit_canvas(this)" 
                                                                     data-canvas="canvas_manager-{{ $tab_form->tab_id }}" 
                                                                     data-sigimage="sigimage_manager-{{ $tab_form->tab_id }}" 
-                                                                    data-sigdataurl="sigUrl_manager-{{ $tab_form->tab_id }}"
-                                                                    data-user_sign = "use_manager-{{ $tab_form->tab_id }}"
-                                                                    data-user_id = "{{ Auth::id() }}" 
-                                                                    data-user_name = "{{ Auth::user()->name }}"
-                                                                    data-tabID="{{ $tab_form->tab_id }}">
+                                                                    data-sigdataurl="sigUrl_manager-{{ $tab_form->tab_id }}">
                                                                     Einreichen
                                                                 </button>
                                                                 <button type="button" class="button-red" 
@@ -337,12 +329,8 @@
                                                             <input type="hidden" name="signature_detail[{{ $tab_form->tab_id }}][1]" id="sigUrl_manager-{{ $tab_form->tab_id }}" class="form-control" rows="5" />
                                                             <img id="sigimage_manager-{{ $tab_form->tab_id }}" src="" style="display: none;">
                                                         </div>
-                                                        <label class="my-4 d-block">
+                                                        <label class="my-4">
                                                             <strong>Unterschrift Manager</strong>
-                                                        </label>
-                                                        <label class="my-4 d-block sign_manager">                                                                
-                                                            <strong id="user-sign-manager-name-{{ $tab_form->tab_id }}" class="name-user"></strong>
-                                                            <input type="hidden" value="" class="user_sign_manager"  name="signature_detail[{{ $tab_form->tab_id }}][4]" id="user_manager_id_{{ $tab_form->tab_id }}">
                                                         </label>
                                                     </div>
                                                 @else                                                          
@@ -355,13 +343,9 @@
                                                             <div class="group mb-3">
                                                                 <button type="button" class="button-red" 
                                                                     onclick="submit_canvas(this)" 
-                                                                    data-user_id = "{{ Auth::id() }}" 
-                                                                    data-user_name = "{{ Auth::user()->name }}"
                                                                     data-canvas="canvas_employee-{{ $tab_form->tab_id }}" 
                                                                     data-sigimage="sigimage_employee-{{ $tab_form->tab_id }}" 
-                                                                    data-sigdataurl="sigUrl_employee-{{ $tab_form->tab_id }}"
-                                                                    data-tabID="{{ $tab_form->tab_id }}"
-                                                                    data-user_sign = "use_employee-{{ $tab_form->tab_id }}">
+                                                                    data-sigdataurl="sigUrl_employee-{{ $tab_form->tab_id }}">
                                                                     Einreichen
                                                                 </button>
                                                                 <button type="button" class="button-red" 
@@ -378,12 +362,8 @@
                                                             <img id="sigimage_employee-{{ $tab_form->tab_id }}" src="" style="display: none;">
                                                                                                                     
                                                         </div>
-                                                        <label class="my-4 d-block">
+                                                        <label class="my-4">
                                                             <strong>Unterschrift Mitarbeiter</strong>
-                                                        </label>
-                                                        <label class="my-4 d-block sign_employee">
-                                                            <strong id="user-sign-name-{{ $tab_form->tab_id }}" class="name-user"></strong>
-                                                            <input type="hidden" value="" class="user_sign_staff"  name="signature_detail[{{ $tab_form->tab_id }}][3]" id="user_staff_id_{{ $tab_form->tab_id }}">
                                                         </label>
                                                     </div>
                                                     <div class="col-lg-6 mb-3 file-group">
@@ -397,11 +377,7 @@
                                                                     onclick="submit_canvas(this)" 
                                                                     data-canvas="canvas_manager-{{ $tab_form->tab_id }}" 
                                                                     data-sigimage="sigimage_manager-{{ $tab_form->tab_id }}" 
-                                                                    data-sigdataurl="sigUrl_manager-{{ $tab_form->tab_id }}"
-                                                                    data-user_sign = "use_manager-{{ $tab_form->tab_id }}"
-                                                                    data-user_id = "{{ Auth::id() }}" 
-                                                                    data-user_name = "{{ Auth::user()->name }}"
-                                                                    data-tabID="{{ $tab_form->tab_id }}">
+                                                                    data-sigdataurl="sigUrl_manager-{{ $tab_form->tab_id }}">
                                                                     Einreichen
                                                                 </button>
                                                                 <button type="button" class="button-red" 
@@ -418,12 +394,8 @@
                                                             <img id="sigimage_manager-{{ $tab_form->tab_id }}" src="" style="display: none;">
                                                                                                                         
                                                         </div>
-                                                        <label class="my-4 d-block">
+                                                        <label class="my-4">
                                                             <strong>Unterschrift Manager</strong>
-                                                        </label>
-                                                        <label class="my-4 d-block sign_manager">                                                                
-                                                            <strong id="user-sign-manager-name-{{ $tab_form->tab_id }}" class="name-user"></strong>
-                                                            <input type="hidden" value="" class="user_sign_manager"  name="signature_detail[{{ $tab_form->tab_id }}][4]" id="user_manager_id_{{ $tab_form->tab_id }}">
                                                         </label>
                                                     </div>
                                                 @endif

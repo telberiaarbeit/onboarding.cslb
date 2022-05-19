@@ -203,28 +203,38 @@ class UsersController extends Controller
             $group_item = DB::table('users')->where('group_id','LIKE','%'.$group_users->group_id.'%')->get();
             $group_name = $group_users->group_name;
             $group_id = $group_users->group_id;
-            if(count($group_item) > 0) {
-                $html .= '<li>
+            $arg_group_id = false;
+            $arg_user_group_id = [];
+            foreach($group_item as $user_list) {
+                foreach(explode(',',$user_list->group_id) as $item_group) {
+                    if($item_group == $group_users->group_id) {
+                        $arg_group_id = true;
+                        array_push($arg_user_group_id,$user_list->id);
+                    }
+                }
+            }
+            if($arg_group_id == true ) {
+                $html .= '<li class="wrap-select-user" data-group_id="'.$group_id.'">
                     <div class="select-action">
                         <div class="select-group">'.$group_name.'</div>
                     </div>
                     <div class="list-user" style="display:none;">
                         <ul class="inner">';
-                        foreach($group_item as $user_list) {
-                            if(in_array($user_list->id,$arg_user)) {
+                        foreach(DB::table('users')->whereIn('id',$arg_user_group_id)->get() as $user_item) {
+                            if(in_array($user_item->id,$arg_user)) {
                                 $html .= '
                                 <li>
                                     <label class="user-task">
-                                        <span class="name-user">'.$user_list->name.'</span>
-                                        <input type="checkbox" class="active" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_list->name.'" value="'.$user_list->id.'" checked>
+                                        <span class="name-user">'.$user_item->name.'</span>
+                                        <input type="checkbox" class="active" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_item->name.'" value="'.$user_item->id.'" checked>
                                     </label> 
                                 </li>';
                             } else {
                                 $html .= '
                                 <li>
                                     <label class="user-task">
-                                        <span class="name-user">'.$user_list->name.'</span>
-                                        <input type="checkbox" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_list->name.'" value="'.$user_list->id.'">
+                                        <span class="name-user">'.$user_item->name.'</span>
+                                        <input type="checkbox" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_item->name.'" value="'.$user_item->id.'">
                                     </label> 
                                 </li>';
 
@@ -258,28 +268,38 @@ class UsersController extends Controller
             $group_item = DB::table('users')->where('group_id','LIKE','%'.$group_users->group_id.'%')->get();
             $group_name = $group_users->group_name;
             $group_id = $group_users->group_id;
-            if(count($group_item) > 0) {
-                $html .= '<li>
+            $arg_group_id = false;
+            $arg_user_group_id = [];
+            foreach($group_item as $user_list) {
+                foreach(explode(',',$user_list->group_id) as $item_group) {
+                    if($item_group == $group_users->group_id) {
+                        $arg_group_id = true;
+                        array_push($arg_user_group_id,$user_list->id);
+                    }
+                }
+            }
+            if($arg_group_id == true ) {
+                $html .= '<li class="wrap-select-user" data-group_id="'.$group_id.'">
                     <div class="select-action">
                         <div class="select-group">'.$group_name.'</div>
                     </div>
                     <div class="list-user" style="display:none;">
                         <ul class="inner">';
-                        foreach($group_item as $user_list) {
-                            if(in_array($user_list->id,$arg_user)) {
+                        foreach(DB::table('users')->whereIn('id',$arg_user_group_id)->get() as $user_item) {
+                            if(in_array($user_item->id,$arg_user)) {
                                 $html .= '
                                 <li>
                                     <label class="user-task">
-                                        <span class="name-user">'.$user_list->name.'</span>
-                                        <input type="checkbox" class="active" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_list->name.'" value="'.$user_list->id.'" checked>
+                                        <span class="name-user">'.$user_item->name.'</span>
+                                        <input type="checkbox" class="active" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_item->name.'" value="'.$user_item->id.'" checked>
                                     </label> 
                                 </li>';
                             } else {
                                 $html .= '
                                 <li>
                                     <label class="user-task">
-                                        <span class="name-user">'.$user_list->name.'</span>
-                                        <input type="checkbox" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_list->name.'" value="'.$user_list->id.'">
+                                        <span class="name-user">'.$user_item->name.'</span>
+                                        <input type="checkbox" name="user_id" data-task_id="'.$task_id.'" data-group_id="'.$group_id.'" data-group_name="'.$group_name.'" data-user_name="'.$user_item->name.'" value="'.$user_item->id.'">
                                     </label> 
                                 </li>';
 
