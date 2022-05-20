@@ -993,14 +993,3 @@ body .bootstrap-select .dropdown-toggle:focus {
    font-weight: 700;
    text-transform: uppercase;
 }
-.task_date.datetimepicker {
-   width: 143px;
-   display: inline-block;
-}
-.task-date-group .custom-checkbox label.custom-control-label {
-   top: 6px;
-}
-.row.group-item.wrap-date-group {
-   position: relative;
-   z-index: 2;
-}

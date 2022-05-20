@@ -132,7 +132,8 @@ jQuery(document).ready(function($){
 
         // Event change active checkbox
         $(document).on('change','.user-task-na input', function(e){
-            var task_id = $(this).data('task_id');
+            var task_id = $(this).attr('data-task_id');
+            console.log(task_id);
             var item_groupp = $('.input-group[data-id="'+task_id+'"] .list-group');
             var list_user_val = $('.current_user[id="'+task_id+'_user"]');
             if($(this).is(':checked')) {

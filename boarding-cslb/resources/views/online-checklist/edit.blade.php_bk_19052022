@@ -213,12 +213,12 @@
                                                 <!-- Task  -->
                                                 @isset( $list_task[$category->id] )  
                                                     @foreach( $list_task[$category->id] as $task)  
-                                                        <div class="row group-item <?php if($task['id'] == 116) { echo 'wrap-date-group'; } ?>">  
+                                                        <div class="row group-item">  
                                                             <div class="col-md-4 mb-3 wrap-datetimepicker {{ $task['task_checkbox_show'] }} @if($task['user_na']) na-abbreviation @endif ">
                                                                 <input type="text" class="form-control datetimepicker-input" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][datetime]" value="{{ $task['task_datetime'] }}">
                                                                 <input type="text" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][abbreviation]" class="form-control input-abbreviation" data-val="{{ $task['task_abbreviation'] }}" value=" @if($task['user_na']) N/A @else {{ $task['task_abbreviation'] }} @endif ">
                                                             </div>
-                                                            <div class="col-md-8 mb-3 d-flex align-items-end <?php if($task['id'] == 8) { echo 'tage-group'; } elseif($task['id'] == 116) { echo 'task-date-group'; } ?>" >
+                                                            <div class="col-md-8 mb-3 d-flex align-items-end <?php if($task['id'] == 8) { echo 'tage-group'; } ?>" >
                                                                 <div class="input-group" data-id="{{ $task['id'] }}">
                                                                     <div class="custom-control custom-checkbox form-check">
                                                                         <!-- <label class="custom-control-label" for="{{ $category->id }}_{{ $task['id'] }}"></label> -->
@@ -239,11 +239,7 @@
                                                                                     <option value="25" <?php if($task["tage"] == '25') echo 'selected="selected"'?>>25</option>
                                                                                     <option value="30" <?php if($task["tage"] == '30') echo 'selected="selected"'?>>30</option>
                                                                                 </select>
-                                                                            @endif 
-                                                                            @if( $task['id'] == 116  ) 
-                                                                                <input type="text" class="form-control task_date datetimepicker" data-toggle="datetimepicker" data-target="#datetimepicker-deadline"  placeholder="Bitte auswählen" name="task_detail[{{ $task['id'] }}_{{ $tab_form->tab_id }}][task_date]" value="{{ $task['task_date'] }}">
-                                                                            @endif   
-
+                                                                            @endif                                                        
                                                                             @if( $task['group_users'] ) 
                                                                             @php $is_na = false;
                                                                             foreach( $task['group_users'] as $user_group) {
@@ -340,8 +336,7 @@
                                                                             data-canvas="canvas_employee-{{ $tab_form->tab_id }}" 
                                                                             data-sigimage="sigimage_employee-{{ $tab_form->tab_id }}" 
                                                                             data-sigdataurl="sigUrl_employee-{{ $tab_form->tab_id }}"
-                                                                            data-user_sign = "use_employee-{{ $tab_form->tab_id }}"
-                                                                            data-tabID="{{ $tab_form->tab_id }}">
+                                                                            data-user_sign = "use_employee-{{ $tab_form->tab_id }}">
                                                                             Einreichen
                                                                         </button>
                                                                         <button type="button" class="button-red" 
@@ -365,7 +360,7 @@
                                                             </label>
                                                             <label class="my-4 d-block sign_employee">
                                                                 <strong id="user-sign-name-{{ $tab_form->tab_id }}" class="name-user">{{ DB::table('users')->where('id',$signature_item->user_id_mitarbeiter)->value('name') }}</strong>
-                                                                <input  id="user_staff_id_{{ $tab_form->tab_id }}" type="hidden" value="" name="signature_detail[{{ $signature_item->id }}][3]">
+                                                                <input id="user_sign_staff" type="hidden" value="" class="user_sign_staff" name="use_employee-{{ $tab_form->tab_id }}">
                                                             </label>
                                                             @else 
                                                             <div class="e-signature position-relative d-inline-block">
@@ -381,8 +376,7 @@
                                                                         data-canvas="canvas_employee-{{ $tab_form->tab_id }}" 
                                                                         data-sigimage="sigimage_employee-{{ $tab_form->tab_id }}" 
                                                                         data-sigdataurl="sigUrl_employee-{{ $tab_form->tab_id }}"
-                                                                        data-user_sign = "use_employee-{{ $tab_form->tab_id }}"
-                                                                        data-tabID="{{ $tab_form->tab_id }}">
+                                                                        data-user_sign = "use_employee-{{ $tab_form->tab_id }}">
                                                                         Einreichen
                                                                     </button>
                                                                     <button type="button" class="button-red" 
@@ -404,7 +398,7 @@
                                                             </label>
                                                             <label class="my-4 d-block sign_employee">
                                                                 <strong id="user-sign-name-{{ $tab_form->tab_id }}" class="name-user"></strong>
-                                                                <input  id="user_staff_id_{{ $tab_form->tab_id }}" type="hidden" value="" name="signature_detail[{{ $signature_item->id }}][3]">
+                                                                <input type="hidden" value="" class="user_sign_staff"  name="signature_detail[{{ $signature_item->id }}][3]" id="user_staff_id_{{ $tab_form->tab_id }}">
                                                             </label>
                                                             @endif  
                                                         </div>
@@ -536,7 +530,7 @@
                                                                 <strong id="user-sign-name-{{ $tab_form->tab_id }}" class="name-user">
                                                                     {{ DB::table('users')->where('id',$signature_item->user_id_mitarbeiter)->value('name') }}
                                                                 </strong>
-                                                                <input  id="user_staff_id_{{ $tab_form->tab_id }}" type="hidden" value="" name="signature_detail[{{ $signature_item->id }}][3]">
+                                                                <input type="hidden" value="" class="user_sign_staff"  name="signature_detail[{{ $signature_item->id }}][3]" id="user_staff_id_{{ $tab_form->tab_id }}">
                                                             </label>
                                                             @else
                                                             <div class="e-signature position-relative d-inline-block">
@@ -575,7 +569,7 @@
                                                             </label>
                                                             <label class="my-4 d-block sign_employee">
                                                                 <strong id="user-sign-name-{{ $tab_form->tab_id }}" class="name-user"></strong>
-                                                                <input  id="user_staff_id_{{ $tab_form->tab_id }}" type="hidden" value="" name="signature_detail[{{ $signature_item->id }}][3]">
+                                                                <input type="hidden" value="" class="user_sign_staff"  name="signature_detail[{{ $signature_item->id }}][3]" id="user_staff_id_{{ $tab_form->tab_id }}">
                                                             </label>
                                                             @endif  
                                                         </div>

@@ -47,8 +47,8 @@ class DashboardController extends Controller
                     }
                 }
                 if(count($arg_date_details) > 0) {               
-                    $total_task = DB::table('task_detail')->where('form_id',$form_id)->whereIn('tab_id',$arg_date_details)->where('user_id','>',0)->count();
-                    $done_task = DB::table('task_detail')->where('form_id',$form_id)->whereIn('tab_id',$arg_date_details)->where('user_id','>',0)->whereNotNull('user_confirmed')->count();
+                    $total_task = DB::table('task_detail')->where('form_id',$form_id)->whereIn('tab_id',$arg_date_details)->count();
+                    $done_task = DB::table('task_detail')->where('form_id',$form_id)->whereIn('tab_id',$arg_date_details)->whereNotNull('user_confirmed')->count();
                 }
                 $data[] = [
                     'id' => $item['id'],
@@ -112,7 +112,7 @@ class DashboardController extends Controller
         $tasks = DB::table('list_task')->orderBy('order')->get();
         if (!empty($tasks)) {
             foreach ($tasks as $task) {
-                if(!empty($task->group_default) && $task->group_default != NULL) {
+                if(!empty($task->group_default)) {
                     $group_default = explode(',',$task->group_default);
                     $list_user_default = [];
                     $arg_group_user_default = [];
@@ -123,23 +123,30 @@ class DashboardController extends Controller
                             if(!in_array($user_id_default->id,$list_user_default)) {
                                 array_push($list_user_default,$user_id_default->id);
                             }
-                            if(count(explode(',',$user_id_default->group_id))>0) {
-                                foreach(explode(',',$user_id_default->group_id) as $current_group) {
-                                    if(in_array($current_group,$group_default) && !in_array($current_group,$arg_group_user_default)) {
-                                        array_push($arg_group_user_default,$current_group);
-                                        $list_group_user[] = [
-                                            'id' => $current_group,
-                                            'name' => DB::table('group_users')->where('group_id',$current_group)->value('group_name'),
-                                        ];
-                                    }
-                                }
-
+                        }
+                    }
+                    foreach( DB::table('users')->whereIn('id',$list_user_default)->get() as $user_item) {
+                        $group_user_default = explode(',',$user_item->group_id);
+                        foreach( explode(',',$user_item->group_id) as $group_item) {
+                            if(!in_array($group_item,$arg_group_user_default) && DB::table('group_users')->where('group_id',$group_item)->count() > 0) {
+                                array_push($arg_group_user_default,$group_item);
+                                $list_group_user[] = [
+                                    'id' => $group_item,
+                                    'name' => DB::table('group_users')->where('group_id',$group_item)->value('group_name'),
+                                ];
                             }
                         }
+
                     }
                     $str_user_default = implode(',',$list_user_default);
                 } else {
                     $str_user_default = "";
+                }
+                
+                if(isset($list_group_user) && !empty($list_group_user)) {
+                    $group_user_default = $list_group_user;
+                } else {
+                    $group_user_default = [];
                 }
 
                 $list_task[$task->category_id][] = [
@@ -147,7 +154,7 @@ class DashboardController extends Controller
                     'name' => $task->name,
                     'category_id' => $task->category_id,
                     'user_defaults' => $str_user_default,
-                    'group_user_default' => $list_group_user,
+                    'group_user_default' => $group_user_default,
                 ];
             }
         }
@@ -265,10 +272,9 @@ class DashboardController extends Controller
                         if (isset($task_detail['datetime']) && !empty($task_detail['datetime'])) {
                             $task['created'] = date("Y-m-d", strtotime($task_detail['datetime']));
                         }
-                        if($task_detail['ids'] == null) {
-                            if($task['confirmed'] = 1) {
-                                $ids = [-1];
-                            }
+
+                        if($task['confirmed'] && empty($task_detail['ids'])) {
+                            $ids = [-1];
                         } elseif(isset($task_detail['ids']) && !empty($task_detail['ids'])) {
                             $ids = explode(',', $task_detail['ids']);
                         } elseif(isset($task_detail['ids']) && $task_detail['ids'] == 0) {
@@ -602,14 +608,9 @@ class DashboardController extends Controller
                                 $user_na = false;
                                 $ids[] = -1;
                             }
-                            
+
                             $tage = $item->tage;
-                    
-                            if(isset($item->task_date) && !empty($item->task_date)) {
-                                $task_date = date("d.m.Y", strtotime($item->task_date));
-                            } else {
-                                $task_date = '';
-                            }
+                            $task_date = date("d.m.Y", strtotime($item->task_date));
                             $task_ids[] = $item->id;
                             $created = $item->created;
                             $user_confirmed = $item->user_confirmed;
@@ -719,7 +720,6 @@ class DashboardController extends Controller
     {
         $current_id = Auth::id();
         $list = DB::table('task_detail')
-            ->where('user_id','>',0)
             ->join('users', 'users.id', '=', 'task_detail.user_id')
             ->join('list_task', 'list_task.id', '=', 'task_detail.task_id')
             ->join('group_users', 'group_users.group_id', '=', 'users.group_id')
@@ -820,34 +820,6 @@ class DashboardController extends Controller
                         $message->from('admin@onboarding.cslb.at', 'CSLB Onboarding');
                         $message->to($task->email, $task->user_name)->subject('Deadline task: '.$task->task_name);
                         //$message->to('jptesting3@gmail.com', $task->user_name)->subject('Deadline task: ' . $task->task_name);
-                        //$this->send_email();
-                    });
-
-                    var_dump($check_send);
-                }
-                break;
-            }
-        }
-    }
-
-    public function check_confirmation()
-    {
-        $list = DB::table('task_detail')
-            ->whereNotNull('task_date')
-            ->join('users', 'users.id', '=', 'task_detail.user_id')
-            ->join('list_task', 'list_task.id', '=', 'task_detail.task_id')
-            ->join('category_sub_detail', 'category_sub_detail.category_id', '=', 'task_detail.category_id')
-            ->whereColumn('category_sub_detail.form_id', '=', 'task_detail.form_id') //second join condition
-            ->get(['users.name as user_name', 'users.email', 'task_detail.*', 'list_task.name as task_name', 'list_task.task_date as task_date', 'category_sub_detail.id as category_id', 'category_sub_detail.created as deadline']);
-        if ($list) {
-            foreach ($list as $task) {
-                //$current_date = date("Y-m-d", strtotime('now'));
-                $current_date = '2022-05-05';
-                if ($current_date == $task->task_date) {
-                    $check_send = Mail::send('emails.confirmation', ['task' => $task], function ($message) use ($task) {
-                        $message->from('admin@onboarding.cslb.at', 'CSLB Onboarding');
-                        $message->to($task->email, $task->user_name)->subject('Codemenschen Test: '.$task->task_name .$task->task_date);
-                        //$message->to('jptesti= \ g3@gmail.com', $task->user_name)->subject('Deadline task: ' . $task->task_name);
                         //$this->send_email();
                     });
 

@@ -426,12 +426,16 @@
         var username = current.getAttribute("data-user_name");
         var user_id = current.getAttribute("data-user_id");
         var user_sign = current.getAttribute("data-user_sign");
+        console.log(username);
+        console.log(user_id);
+        console.log(user_sign);
+        console.log('use_employee-'+ tabID);
         if(user_sign == ('use_employee-'+ tabID)) {
-            $('#user_staff_id_' + tabID  ).val(user_id)
-            $('#user-sign-name-' + tabID  ).html(username)
+            $('#user_staff_id_' + tabID  ).val(user_id);
+            $('#user-sign-name-' + tabID  ).html(username);
         } else {
-            $('#user_manager_id_' + tabID  ).val(user_id)
-            $('#user-sign-manager-name-' + tabID  ).html(username)
+            $('#user_manager_id_' + tabID  ).val(user_id);
+            $('#user-sign-manager-name-' + tabID  ).html(username);
         }
     }
 
